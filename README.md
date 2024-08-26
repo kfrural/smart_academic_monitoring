@@ -25,3 +25,30 @@ O projeto tem como objetivo beneficiar pequenos e médios produtores rurais da r
 **Contextualização:**
 
 O objetivo principal deste projeto é promover a inovação e aumentar a eficiência na agricultura local através da implementação de tecnologias avançadas. Ao fornecer aos produtores ferramentas de visualização de dados, o projeto busca melhorar a gestão dos cultivos e facilitar a tomada de decisões baseada em informações precisas e em tempo real. A colaboração entre especialistas em tecnologia e agricultura será essencial para garantir que a solução proposta seja prática e acessível para a comunidade rural.
+
+### Situação-Problema Identificada na Comunidade Local
+
+**Contexto:**
+
+Na região de São Geraldo, MG, os pequenos e médios produtores rurais enfrentam uma série de desafios significativos que afetam diretamente a eficiência e a sustentabilidade de suas atividades agrícolas. Após realizar encontros e conversas com diversos produtores locais, foram identificados os principais problemas que motivam a elaboração desta atividade de extensão.
+
+**Principais Problemas Identificados:**
+
+1. **Dificuldade na Gestão de Cultivos:**
+   Muitos produtores enfrentam dificuldades na gestão eficaz de seus cultivos devido à falta de informações precisas e em tempo real sobre condições climáticas e estado dos solos. A ausência de ferramentas de monitoramento e visualização adequadas impede que os produtores tomem decisões informadas sobre a irrigação, aplicação de fertilizantes e controle de pragas.
+
+2. **Adaptação às Mudanças Climáticas:**
+   Os produtores rurais da região têm enfrentado dificuldades significativas para se adaptar às mudanças climáticas. A variabilidade nos padrões de precipitação e temperatura tem afetado a produtividade das lavouras. A falta de dados climáticos específicos e de ferramentas para prever e analisar essas mudanças limita a capacidade dos agricultores de se adaptarem de forma eficaz.
+
+3. **Acesso Limitado a Tecnologias Modernas:**
+   Há uma carência de acesso a tecnologias modernas e a conhecimento sobre como utilizá-las de maneira eficaz. Muitos produtores ainda utilizam métodos tradicionais e não têm acesso a plataformas digitais que poderiam facilitar a visualização e interpretação de dados agrícolas. Essa falta de acesso tecnológico contribui para uma gestão menos eficiente e para uma menor capacidade de resposta às demandas do mercado.
+
+4. **Informações Fragmentadas e Desatualizadas:**
+   As informações disponíveis sobre cultivo, clima e recursos são frequentemente fragmentadas e desatualizadas. Isso resulta em uma falta de coordenação e em decisões baseadas em dados imprecisos ou incompletos. A ausência de um sistema integrado que forneça dados atualizados e consolidados compromete a eficácia das práticas agrícolas.
+
+5. **Baixa Capacitação em Análise de Dados:**
+   A maioria dos produtores não possui formação técnica ou experiência em análise de dados, o que dificulta a interpretação e o uso de informações para otimização de suas atividades. A falta de capacitação específica para lidar com dados complexos limita a capacidade de aproveitar ao máximo as informações disponíveis.
+
+**Motivação para a Atividade de Extensão:**
+
+A situação-problema vivenciada pelos produtores de São Geraldo motiva a elaboração deste projeto de extensão. A introdução de ferramentas de visualização de dados permitirá que os agricultores tenham acesso a informações precisas e em tempo real, melhorando a gestão dos cultivos e a adaptação às mudanças climáticas. Além disso, a capacitação em tecnologias de visualização e análise de dados contribuirá para um gerenciamento mais eficiente e sustentável das atividades agrícolas, promovendo assim o desenvolvimento econômico e a qualidade de vida na região.
