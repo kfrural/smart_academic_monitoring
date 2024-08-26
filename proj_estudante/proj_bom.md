@@ -1,5 +1,3 @@
-Claro, aqui está o texto formatado como um artigo acadêmico, com título e resumo inclusos:
-
 ---
 
 # Desenvolvimento e Implementação de um Aplicativo de Gestão Acadêmica para Melhoria na Organização e Desempenho Estudantil
