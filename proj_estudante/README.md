@@ -104,3 +104,55 @@ Este projeto de extensão visa resolver as dificuldades enfrentadas pelos estuda
   - **O que fazer:** Ministrar treinamentos sobre o uso do dashboard.
   - **Quando fazer:** De 1 a 15 de novembro de 2024.
   - **Como fazer:** Organizar workshops e
+
+ sessões de treinamento.
+  - **Para quem fazer:** Estudantes universitários.
+  - **Onde fazer:** Aulas e eventos no campus.
+
+- **Ação 5: Implementação Final e Suporte**
+  - **O que fazer:** Lançar oficialmente o dashboard e fornecer suporte técnico contínuo.
+  - **Quando fazer:** A partir de 16 de novembro de 2024.
+  - **Como fazer:** Disponibilizar o dashboard e fornecer suporte técnico online.
+  - **Para quem fazer:** Estudantes e equipe de suporte.
+  - **Onde fazer:** Online e no campus.
+
+**Objetivo 2: Capacitar aproximadamente 100 estudantes universitários no uso do dashboard, oferecendo treinamentos e suporte técnico durante o projeto.**
+
+- **Ação 1: Inscrição dos Estudantes**
+  - **O que fazer:** Realizar a inscrição dos estudantes interessados em participar.
+  - **Quando fazer:** Até 30 de setembro de 2024.
+  - **Como fazer:** Utilizar formulários online e divulgação.
+  - **Para quem fazer:** Estudantes universitários.
+  - **Onde fazer:** Online.
+
+- **Ação 2: Realização dos Treinamentos**
+  - **O que fazer:** Ministrar treinamentos sobre o uso do dashboard.
+  - **Quando fazer:** De 1 a 15 de novembro de 2024.
+  - **Como fazer:** Oferecer workshops presenciais e virtuais.
+  - **Para quem fazer:** Estudantes universitários.
+  - **Onde fazer:** Campus e online.
+
+**Objetivo 3: Avaliar a melhoria na gestão do estudo e no desempenho acadêmico dos estudantes participantes por meio de feedbacks e análises de desempenho após seis meses de uso do dashboard.**
+
+- **Ação 1: Coleta de Feedback**
+  - **O que fazer:** Recolher feedback dos estudantes sobre o uso do dashboard.
+  - **Quando fazer:** De 1 a 15 de junho de 2025.
+  - **Como fazer:** Aplicar questionários e entrevistas.
+  - **Para quem fazer:** Estudantes universitários.
+  - **Onde fazer:** Online e presencialmente.
+
+- **Ação 2: Análise de Dados de Desempenho**
+  - **O que fazer:** Analisar o impacto do uso do dashboard no desempenho acadêmico dos estudantes.
+  - **Quando fazer:** De 16 a 30 de junho de 2025.
+  - **Como fazer:** Utilizar técnicas de análise de dados e comparação de resultados.
+  - **Para quem fazer:** Equipe do projeto.
+  - **Onde fazer:** Escritório de análise de dados.
+
+- **Ação 3: Relatório Final e Divulgação**
+  - **O que fazer:** Elaborar um relatório final e divulgar os resultados do projeto.
+  - **Quando fazer:** Até 15 de julho de 2025.
+  - **Como fazer:** Compilar dados e preparar um relatório.
+  - **Para quem fazer:** Equipe do projeto e público-alvo.
+  - **Onde fazer:** Online e eventos de apresentação.
+
+---
