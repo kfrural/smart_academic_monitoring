@@ -92,3 +92,15 @@ A aplicação de técnicas de Big Data e a utilização da linguagem Python para
    A introdução de tecnologias e práticas inovadoras contribuirá para uma agricultura mais sustentável e eficiente, promovendo um impacto positivo tanto na economia local quanto na preservação cultural.
 
 Ao aplicar os conhecimentos da disciplina, este projeto de extensão visa não apenas resolver as queixas e desafios da comunidade rural, mas também enriquecer a formação acadêmica e técnica dos envolvidos, proporcionando uma melhoria abrangente na qualidade de vida e na sustentabilidade das atividades agrícolas.
+
+
+### Objetivos do Projeto
+
+1. **Desenvolver e implementar um dashboard de visualização de dados climáticos e de cultivo para pequenos e médios produtores rurais da região de São Geraldo, MG, até o final do semestre.**
+   - Este objetivo visa criar uma ferramenta prática que permita aos produtores monitorar condições climáticas e o estado dos cultivos em tempo real, facilitando a gestão eficiente e a adaptação às mudanças climáticas.
+
+2. **Capacitar aproximadamente 50 produtores rurais no uso da ferramenta de visualização de dados, oferecendo treinamentos e suporte técnico durante o projeto.**
+   - Este objetivo busca garantir que os produtores saibam utilizar efetivamente o dashboard, proporcionando treinamentos práticos e suporte para maximizar o impacto da ferramenta na gestão de suas propriedades.
+
+3. **Avaliar a melhoria na tomada de decisões e na eficiência agrícola dos produtores participantes por meio de feedbacks e análises de desempenho após seis meses de uso da ferramenta.**
+   - Este objetivo foca na coleta e análise de dados de feedback dos produtores para medir a eficácia da ferramenta em melhorar a tomada de decisões e a eficiência na gestão dos cultivos, ajustando a solução conforme necessário para atender melhor às necessidades da comunidade.
