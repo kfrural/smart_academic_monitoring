@@ -52,3 +52,43 @@ Na região de São Geraldo, MG, os pequenos e médios produtores rurais enfrenta
 **Motivação para a Atividade de Extensão:**
 
 A situação-problema vivenciada pelos produtores de São Geraldo motiva a elaboração deste projeto de extensão. A introdução de ferramentas de visualização de dados permitirá que os agricultores tenham acesso a informações precisas e em tempo real, melhorando a gestão dos cultivos e a adaptação às mudanças climáticas. Além disso, a capacitação em tecnologias de visualização e análise de dados contribuirá para um gerenciamento mais eficiente e sustentável das atividades agrícolas, promovendo assim o desenvolvimento econômico e a qualidade de vida na região.
+
+### Situação-Problema e Impactos na Vida da Comunidade
+
+**Situação-Problema:**
+
+Os pequenos e médios produtores rurais da região de São Geraldo, MG, enfrentam problemas significativos relacionados à gestão de cultivos e à adaptação às mudanças climáticas. A falta de informações precisas e em tempo real sobre condições climáticas e estado dos solos, combinada com o acesso limitado a tecnologias modernas e a capacitação insuficiente em análise de dados, resulta em decisões menos informadas e práticas agrícolas menos eficientes.
+
+**Impactos na Vida Social, Educacional, Cultural e Econômica:**
+
+1. **Impacto Social:**
+   A dificuldade em gerenciar adequadamente os cultivos e a falta de adaptação às mudanças climáticas afetam a segurança alimentar e a qualidade de vida dos produtores e suas famílias. A ineficiência na produção pode levar à escassez de alimentos e à instabilidade econômica, contribuindo para uma maior vulnerabilidade social.
+
+2. **Impacto Educacional:**
+   A carência de acesso a tecnologias e de capacitação em análise de dados limita as oportunidades educacionais dos produtores. A falta de formação técnica impede que os agricultores se atualizem com as melhores práticas e tecnologias, restringindo suas oportunidades de crescimento e desenvolvimento pessoal.
+
+3. **Impacto Cultural:**
+   A dependência de métodos tradicionais e a dificuldade em adotar novas tecnologias podem limitar a inovação e a preservação das práticas culturais tradicionais na agricultura. A integração de tecnologias modernas pode ajudar a manter e valorizar as práticas culturais, adaptando-as às novas realidades e desafios.
+
+4. **Impacto Econômico:**
+   A gestão ineficiente dos cultivos e a adaptação inadequada às mudanças climáticas impactam negativamente a produtividade e a rentabilidade das propriedades agrícolas. Isso pode levar a perdas econômicas significativas, afetando a capacidade dos produtores de sustentar suas atividades e suas famílias.
+
+**Contribuição dos Conteúdos Estudados:**
+
+A aplicação de técnicas de Big Data e a utilização da linguagem Python para o tratamento e visualização de dados proporcionará uma solução prática e eficaz para os problemas identificados. Ao criar dashboards e sistemas de visualização para dados climáticos e de cultivo, será possível fornecer informações precisas e em tempo real aos produtores, permitindo que eles tomem decisões mais informadas e ajustem suas práticas agrícolas de acordo com as condições atuais.
+
+**Benefícios da Aplicação dos Conteúdos:**
+
+1. **Melhoria da Gestão de Cultivos:**
+   O uso de ferramentas de visualização permitirá que os produtores monitorem e analisem dados sobre condições climáticas e estado dos solos, resultando em uma gestão mais eficiente dos cultivos.
+
+2. **Adaptação às Mudanças Climáticas:**
+   Com informações detalhadas e atualizadas, os produtores poderão adaptar suas práticas agrícolas às mudanças climáticas de forma mais eficaz, melhorando a resiliência de suas atividades.
+
+3. **Capacitação Técnica:**
+   A implementação de tecnologias modernas e a capacitação em análise de dados promoverão o desenvolvimento de habilidades técnicas entre os produtores, enriquecendo seu conhecimento e potencializando suas oportunidades de crescimento.
+
+4. **Inovação e Sustentabilidade:**
+   A introdução de tecnologias e práticas inovadoras contribuirá para uma agricultura mais sustentável e eficiente, promovendo um impacto positivo tanto na economia local quanto na preservação cultural.
+
+Ao aplicar os conhecimentos da disciplina, este projeto de extensão visa não apenas resolver as queixas e desafios da comunidade rural, mas também enriquecer a formação acadêmica e técnica dos envolvidos, proporcionando uma melhoria abrangente na qualidade de vida e na sustentabilidade das atividades agrícolas.
