@@ -17,3 +17,19 @@ As partes envolvidas nesta atividade extensionista são estudantes e jovens prof
 - **Quantidade Estimada de Participantes:** A atividade pretende beneficiar entre 20 e 50 participantes, baseando-se em uma estimativa da demanda local por treinamento especializado em Big Data e Python. Esse número reflete o interesse demonstrado por estudantes e profissionais da área, bem como a capacidade de oferecer uma experiência de aprendizado efetiva e personalizada.
 
 Este projeto é conduzido de forma independente, utilizando recursos próprios e apoio da infraestrutura do IFSSEMG. A atividade visa proporcionar uma formação prática e teórica valiosa, ajudando os participantes a desenvolver habilidades essenciais em Big Data e Python, que são cada vez mais demandadas no mercado de trabalho.
+
+### Situação-Problema Identificada
+
+Na comunidade local de Rio Pomba e arredores, observa-se uma carência significativa na formação prática e especializada em Big Data e suas aplicações. A situação-problema identificada é a falta de acesso a treinamento avançado em Big Data utilizando ferramentas modernas como Python, o que limita o potencial de aprendizado e desenvolvimento dos estudantes e jovens profissionais da área de Ciência da Computação.
+
+**Problemas Identificados:**
+
+1. **Carência de Formação Especializada:** Muitos estudantes e profissionais da região enfrentam dificuldades para acessar treinamentos especializados em Big Data e Python, áreas de crescente importância no mercado de trabalho. A oferta de cursos e workshops sobre esses temas é limitada, resultando em uma lacuna significativa na formação acadêmica e prática dos interessados.
+
+2. **Desafios no Desenvolvimento de Habilidades Práticas:** A falta de recursos e oportunidades para aprender e praticar técnicas avançadas de Big Data contribui para uma formação incompleta. Os estudantes têm dificuldade em adquirir habilidades práticas necessárias para lidar com grandes volumes de dados e ferramentas de análise, o que pode prejudicar suas perspectivas de carreira.
+
+3. **Escassez de Ferramentas de Análise e Visualização:** A ausência de ferramentas adequadas para análise e visualização de dados limita a capacidade dos participantes de realizar análises eficazes e de extrair insights valiosos de grandes conjuntos de dados. Isso afeta diretamente sua capacidade de executar projetos e resolver problemas complexos.
+
+4. **Necessidade de Desenvolvimento Profissional:** Profissionais recém-formados e estudantes avançados frequentemente enfrentam desafios ao tentar integrar conhecimentos teóricos com práticas do mundo real. A falta de oportunidades para aplicar conceitos de Big Data em contextos práticos impede que eles adquiram experiência prática relevante.
+
+A elaboração desta atividade de extensão visa atender a essa demanda não satisfeita, oferecendo uma aula prática e teórica sobre Big Data e Python. A proposta busca preencher a lacuna existente, proporcionando aos participantes a oportunidade de desenvolver habilidades essenciais e práticas avançadas que são cada vez mais demandadas no mercado de trabalho. A atividade pretende assim contribuir para a formação de profissionais mais preparados e qualificados na área de Big Data, ajudando a superar as dificuldades enfrentadas pela comunidade local.
