@@ -1,5 +1,5 @@
 ### Proposta de Projeto de Extensão: Tópicos de Big Data em Python
-Link canva: https://www.canva.com/design/DAGPKSD6zEQ/V6FRbSFUFGlnnddPp28TEQ/edit?utm_content=DAGPKSD6zEQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+Link canva:https://www.canva.com/design/DAGPKSD6zEQ/V6FRbSFUFGlnnddPp28TEQ/edit?utm_content=DAGPKSD6zEQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 Link formulario: https://forms.gle/cyrhp8uVUigHdcFx7
 
