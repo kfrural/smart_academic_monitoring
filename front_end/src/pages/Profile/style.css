@@ -1,0 +1,41 @@
+/* src/style.css */
+
+/* Estilos para o Perfil do Usuário */
+.profile {
+    padding: 20px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 20px; /* Espaço abaixo do perfil */
+  }
+  
+  .profile h1 {
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+  }
+  
+  .profile-details {
+    background-color: #ffffff; /* Cor de fundo para detalhes do perfil */
+    padding: 15px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .profile p {
+    margin: 5px 0; /* Espaçamento vertical entre parágrafos */
+  }
+  
+  .edit-button {
+    margin-top: 15px; /* Espaço acima do botão */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: #ffffff; /* Cor do texto do botão */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: background-color 0.3s; /* Efeito de transição */
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+  }
+  

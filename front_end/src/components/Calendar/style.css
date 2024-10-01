@@ -1,0 +1,43 @@
+/* styles.css */
+
+/* Estilo do Calendário */
+.study-calendar {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo do título do calendário */
+  .study-calendar h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 1rem;
+  }
+  
+  /* Estilo da lista de tarefas */
+  .study-calendar .tasks {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Estilo das tarefas individuais */
+  .study-calendar .task {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .study-calendar .task:last-child {
+    border-bottom: none; /* Remove a borda do último item */
+  }
+  
+  /* Estilo do cabeçalho da lista de tarefas */
+  .study-calendar h3 {
+    color: #333;
+  }
+  

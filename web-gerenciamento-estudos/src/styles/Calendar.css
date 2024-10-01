@@ -1,0 +1,25 @@
+/* src/styles/Calendar.css */
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .calendar-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .calendar-container table {
+    border-collapse: collapse;
+  }
+  
+  .calendar-container th,
+  .calendar-container td {
+    padding: 10px;
+    border: 1px solid #007bff;
+    text-align: center;
+  }
+  

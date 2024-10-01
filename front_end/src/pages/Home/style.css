@@ -1,0 +1,45 @@
+/* style.css */
+
+/* Estilo geral do container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Altura total da viewport */
+    background-color: #f0f8ff; /* Cor de fundo suave */
+    font-family: 'Arial', sans-serif; /* Fonte padrão */
+    color: #333; /* Cor do texto */
+  }
+  
+  /* Estilo do título */
+  h1 {
+    font-size: 2.5rem; /* Tamanho da fonte do título */
+    margin-bottom: 20px; /* Margem inferior */
+  }
+  
+  /* Estilo do parágrafo */
+  p {
+    font-size: 1.2rem; /* Tamanho da fonte do parágrafo */
+    margin-bottom: 30px; /* Margem inferior */
+    text-align: center; /* Centralizar texto */
+  }
+  
+  /* Estilo dos botões */
+  button {
+    background-color: #333; /* Cor de fundo dos botões */
+    color: white; /* Cor do texto dos botões */
+    border: none; /* Remover borda */
+    padding: 10px 20px; /* Espaçamento interno */
+    margin: 10px; /* Margem ao redor dos botões */
+    font-size: 1rem; /* Tamanho da fonte dos botões */
+    cursor: pointer; /* Cursor em forma de ponteiro ao passar o mouse */
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+  }
+  
+  /* Estilo dos botões ao passar o mouse */
+  button:hover {
+    background-color: #45a049; /* Cor de fundo ao passar o mouse */
+  }
+  

@@ -1,0 +1,19 @@
+/* style.css */
+
+/* Estilo geral do rodapé */
+footer {
+    background-color: #333; /* Cor de fundo do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Centraliza o texto */
+    padding: 20px; /* Espaçamento interno */
+    position: relative; /* Para melhor controle do posicionamento */
+    bottom: 0; /* Garante que o rodapé fique na parte inferior */
+    width: 100%; /* Largura total */
+  }
+  
+  /* Estilo do texto no rodapé */
+  footer p {
+    margin: 0; /* Remove margem padrão */
+    font-size: 1rem; /* Tamanho da fonte do texto */
+  }
+  

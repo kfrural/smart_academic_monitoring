@@ -1,0 +1,43 @@
+/* src/style.css */
+
+/* Estilos para o formulário de tarefas */
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff; /* Cor de fundo do formulário */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para o formulário */
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para os inputs */
+  input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ced4da; /* Borda do input */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px;
+  }
+  
+  /* Estilo para o placeholder dos inputs */
+  input::placeholder {
+    color: #aab8c2; /* Cor do texto do placeholder */
+  }
+  
+  /* Estilo para o botão */
+  button {
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+    padding: 10px 15px; /* Padding do botão */
+    border-radius: 5px; /* Bordas arredondadas do botão */
+    font-size: 16px; /* Tamanho da fonte do botão */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+  }
+  
+  /* Efeito ao passar o mouse sobre o botão */
+  button:hover {
+    background-color: #0056b3; /* Cor ao passar o mouse */
+  }
+  
