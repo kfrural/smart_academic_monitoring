@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await authService.login(email, password);
-      navigate("/dashboard");
+      navigate("/disciplinas");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     }

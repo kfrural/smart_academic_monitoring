@@ -1,0 +1,41 @@
+.registro-estudo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .registro-estudo-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .registro-estudo-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 300px;
+  }
+  
+  .registro-estudo-container input, select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .registro-estudo-container button {
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .registro-estudo-container button:hover {
+    background-color: #0056b3;
+  }
+  

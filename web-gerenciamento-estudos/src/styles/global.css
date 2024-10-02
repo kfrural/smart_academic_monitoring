@@ -19,4 +19,43 @@
   a:hover {
     text-decoration: underline;
   }
-  
+  /* Header e Footer CSS */
+
+.header {
+  background-color: #4CAF50;
+  padding: 10px 0;
+}
+
+.nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav ul li {
+  display: inline;
+}
+
+.nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.nav ul li a:hover {
+  background-color: #45a049;
+  border-radius: 4px;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}

@@ -1,13 +1,13 @@
-// src/pages/Calendar.tsx
-import React from "react";
+// Footer.tsx
+import React from 'react';
 
-const Calendar: React.FC = () => {
+const Footer: React.FC = () => {
   return (
-    <div>
-      <h1>Seu Calendário</h1>
-      <p>Calendário acadêmico estará aqui.</p>
-    </div>
+    <footer className="footer">
+      <p>&copy; 2024 Gerenciamento Acadêmico. Todos os direitos reservados.</p>
+      <p>Desenvolvido por <a href='https://kfrural.netlify.app/'>kfrural</a></p>
+    </footer>
   );
 };
 
-export default Calendar;
+export default Footer;

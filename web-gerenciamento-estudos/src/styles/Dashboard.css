@@ -24,3 +24,8 @@
     background-color: #ced4da;
   }
   
+  .dashboard-container canvas {
+    width: 100%;
+    max-width: 600px;
+  }
+  
