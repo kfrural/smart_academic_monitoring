@@ -1,86 +1,102 @@
 /* Disciplinas.css */
 
 .disciplinas-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .add-disciplina-form {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .input-disciplina {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .add-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .add-button:hover {
-    background-color: #45a049;
-  }
-  
-  .disciplinas-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Espaço entre os cards */
-  }
-  
-  .disciplina-card {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .disciplina-card h3 {
-    margin: 0 0 10px;
-  }
-  
-  .disciplina-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .edit-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .dashboard-link {
-    color: #007BFF;
-    text-decoration: none;
-  }
-  
-  .dashboard-link:hover {
-    text-decoration: underline;
-  }
-  
+  max-width: 900px; /* Aumente a largura máxima do container */
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 36px;
+  border-bottom: 2px solid #007BFF;
+  padding-bottom: 20px;/* Espaço abaixo do título */
+}
+
+.add-disciplina-form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.input-disciplina {
+  flex: 1;
+  padding: 12px; /* Aumente o padding para dar mais espaço */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 16px; /* Aumente o tamanho da fonte */
+}
+
+.add-button {
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px; /* Aumente o tamanho da fonte */
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.disciplinas-list {
+  display: grid; /* Use grid para melhor layout */
+  grid-template-columns: repeat(3, 1fr); /* Três disciplinas por fileira */
+  gap: 25px; /* Espaço entre os cards */
+}
+
+.disciplina-card {
+  background-color: #f9f9f9;
+  padding: 20px; /* Aumente o padding para dar mais espaço */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Aumente o raio da borda para cantos mais arredondados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s; /* Transição suave para o efeito de hover */
+}
+
+.disciplina-card:hover {
+  transform: translateY(-5px); /* Levante o cartão ao passar o mouse */
+}
+
+.disciplina-card h3 {
+  margin: 0 0 10px;
+  font-size: 20px; /* Aumente o tamanho da fonte do título */
+  color: #333; /* Cor do texto do título */
+}
+
+.disciplina-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px; /* Espaço acima dos botões */
+}
+
+.edit-button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 16px; /* Aumente o padding para dar mais espaço */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Aumente o tamanho da fonte */
+  transition: background-color 0.2s; /* Transição suave para o efeito de hover */
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.dashboard-link {
+  color: #007BFF;
+  text-decoration: none;
+  font-size: 14px; /* Aumente o tamanho da fonte */
+}
+
+.dashboard-link:hover {
+  text-decoration: underline;
+}

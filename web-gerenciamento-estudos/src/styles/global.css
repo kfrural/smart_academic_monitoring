@@ -22,8 +22,8 @@
   /* Header e Footer CSS */
 
 .header {
-  background-color: #4CAF50;
-  padding: 10px 0;
+  background-color: #333;
+  padding: 40px 0;
 }
 
 .nav ul {
@@ -46,7 +46,7 @@
 }
 
 .nav ul li a:hover {
-  background-color: #45a049;
+  background-color: #333;
   border-radius: 4px;
 }
 

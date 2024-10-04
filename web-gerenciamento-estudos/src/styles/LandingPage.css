@@ -1,29 +1,187 @@
-/* src/styles/LandingPage.css */
-.landing-container {
-    display: flex;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.nav-list {
+  display: flex;
+  list-style-type: none;
+}
+
+.nav-list li {
+  margin-left: 1rem;
+}
+
+.nav-list a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+  color: #007bff;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.hero-section h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Adiciona um espaço de 2rem entre os botões */
+  margin-top: 2rem; /* Adiciona um pouco de espaço acima dos botões */
+}
+
+.cta-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.parent-cta-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.benefits-section {
+  padding: 3rem 0;
+}
+
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-item {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.stats-section {
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .navigation {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #007bff;
-    color: white;
   }
-  
-  .landing-container h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+
+  .nav-list {
+    width: 100%;
+    padding: 1rem 0;
   }
-  
-  .landing-container a {
-    font-size: 1.2rem;
-    color: white;
-    background-color: #0056b3;
+
+  .nav-list li {
+    margin-left: 0;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 0.9rem;
+  }
+
+  .cta-button {
+    font-size: 16px;
     padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
   }
-  
-  .landing-container a:hover {
-    background-color: #003f7f;
+
+  .benefit-grid {
+    grid-template-columns: 1fr;
   }
-  
+
+  .stat-item {
+    margin: 1rem 0;
+  }
+}

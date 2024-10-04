@@ -185,9 +185,9 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="calendar-container">
-      <Header /> {/* Componente de Header */}
-      
+    <>
+    <Header />
+    <main className="calendar-container">
       <div className="calendar-header">
         <button onClick={() => changeMonth("prev")} className="month-nav">
           Anterior
@@ -216,39 +216,68 @@ const Calendar: React.FC = () => {
         <div className="modal">
           <div className="modal-content">
             <h3>Eventos para o dia {selectedDay}</h3>
-            <input
-              type="text"
-              placeholder="Nome do Evento"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-            />
-            <select
-              value={selectedDiscipline}
-              onChange={(e) => setSelectedDiscipline(e.target.value)}
-            >
-              <option value="">Selecione uma disciplina</option>
-              {disciplines.map((discipline) => (
-                <option key={discipline.id} value={discipline.nome}>
-                  {discipline.nome}
-                </option>
-              ))}
-            </select>
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-            >
-              <option value="prova">Prova</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="seminário">Seminário</option>
-            </select>
-            <button onClick={handleSaveEvent}>Salvar Evento</button>
-            <button onClick={handleCloseModal}>Fechar</button>
+            <div className="event-list">
+              {eventsForSelectedDay.length > 0 ? (
+                eventsForSelectedDay.map((event) => (
+                  <div key={event.id} className={`event ${event.type}`}>
+                    {event.event} - {event.type} ({event.discipline})
+                  </div>
+                ))
+              ) : (
+                <p>Nenhum evento para este dia.</p>
+              )}
+            </div>
+            <h4>Cadastrar Novo Evento</h4>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              handleSaveEvent();
+            }}>
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Nome do Evento"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <select
+                  value={selectedDiscipline}
+                  onChange={(e) => setSelectedDiscipline(e.target.value)}
+                  required
+                >
+                  <option value="">Selecione uma disciplina</option>
+                  {disciplines.map((discipline) => (
+                    <option key={discipline.id} value={discipline.name || discipline.nome}>
+                      {discipline.name || discipline.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="input-group">
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                  required
+                >
+                  <option value="prova">Prova</option>
+                  <option value="trabalho">Trabalho</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+              <div className="button-group">
+                <button type="submit" className="save-button">Salvar Evento</button>
+                <button onClick={handleCloseModal} className="close-button">Fechar</button>
+              </div>
+            </form>
           </div>
         </div>
       )}
 
-      <Footer /> {/* Componente de Footer */}
-    </div>
+    </main>
+    <Footer />
+  </>
   );
 };
 
