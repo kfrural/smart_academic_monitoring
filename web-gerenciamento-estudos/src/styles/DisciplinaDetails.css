@@ -1,0 +1,102 @@
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+h2 {
+  color: #0066cc;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+form {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+}
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h4 {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+ul {
+  padding-left: 15px;
+}
+
+li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.line-chart-container {
+  height: 400px;
+  margin-top: 20px;
+}
+
+@media (max-width: 1200px) {
+  .line-chart-container {
+    height: 350px;
+  }
+}
+
+@media (max-width: 992px) {
+  .line-chart-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .line-chart-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .line-chart-container {
+    height: 200px;
+  }
+}

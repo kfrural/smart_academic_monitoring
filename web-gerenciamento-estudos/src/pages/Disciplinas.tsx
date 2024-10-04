@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, addDoc, updateDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom"; // Importando o hook para navegação
 import { db } from "../services/firebaseConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,9 +8,8 @@ import "../styles/Disciplinas.css";
 
 const Disciplinas: React.FC = () => {
   const [disciplinas, setDisciplinas] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
   const [newDisciplina, setNewDisciplina] = useState("");
-  const [selectedDisciplina, setSelectedDisciplina] = useState<any>(null); // Para armazenar a disciplina selecionada
+  const navigate = useNavigate(); // Inicializando o hook de navegação
 
   useEffect(() => {
     const fetchDisciplinas = async () => {
@@ -18,14 +18,7 @@ const Disciplinas: React.FC = () => {
       setDisciplinas(disciplinasList);
     };
 
-    const fetchEvents = async () => {
-      const eventsSnapshot = await getDocs(collection(db, "eventos"));
-      const eventsList = eventsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setEvents(eventsList);
-    };
-
     fetchDisciplinas();
-    fetchEvents();
   }, []);
 
   const handleAddDisciplina = async (e: React.FormEvent) => {
@@ -50,17 +43,14 @@ const Disciplinas: React.FC = () => {
     }
   };
 
-  const handleSelectDisciplina = (disciplina: any) => {
-    setSelectedDisciplina(disciplina);
+  const handleSelectDisciplina = (disciplinaId: string) => {
+    // Redireciona para a página de detalhes da disciplina selecionada
+    navigate(`/disciplina/${disciplinaId}`);
   };
-
-  // Filtra os eventos pela disciplina selecionada
-  const filteredEvents = events.filter((event) => event.discipline === selectedDisciplina?.nome);
 
   return (
     <div>
       <Header />
-
       <div className="disciplinas-container">
         <h1>Disciplinas</h1>
         <form onSubmit={handleAddDisciplina} className="add-disciplina-form">
@@ -77,35 +67,15 @@ const Disciplinas: React.FC = () => {
 
         <div className="disciplinas-list">
           {disciplinas.map((disciplina) => (
-            <div key={disciplina.id} className="disciplina-card" onClick={() => handleSelectDisciplina(disciplina)}>
+            <div key={disciplina.id} className="disciplina-card" onClick={() => handleSelectDisciplina(disciplina.id)}>
               <h3>{disciplina.nome}</h3>
               <div className="disciplina-actions">
                 <button onClick={() => handleEditDisciplina(disciplina.id)} className="edit-button">Editar</button>
-                <a href={`/dashboard/${disciplina.id}`} className="dashboard-link">Dashboard</a>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Mostrar os eventos relacionados à disciplina selecionada */}
-        {selectedDisciplina && (
-          <div className="eventos-relacionados">
-            <h2>Eventos relacionados à {selectedDisciplina.nome}</h2>
-            {filteredEvents.length > 0 ? (
-              <ul>
-                {filteredEvents.map((event) => (
-                  <li key={event.id}>
-                    <strong>{event.event}</strong> - {event.type} ({event.discipline}) - {event.day} / {event.month}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>Nenhum evento encontrado para esta disciplina.</p>
-            )}
-          </div>
-        )}
       </div>
-
       <Footer />
     </div>
   );
