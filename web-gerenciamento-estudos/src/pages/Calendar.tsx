@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, addDoc, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
-import { db, auth } from "../services/firebaseConfig";// Certifique-se de importar a configuração do Firebase Auth
+import { db, auth } from "../services/firebaseConfig"; // Certifique-se de importar a configuração do Firebase Auth
 import "../styles/Calendar.css";
 import Header from "../components/Header"; // Importando o Header
 import Footer from "../components/Footer"; // Importando o Footer
@@ -13,7 +13,7 @@ interface Event {
   event: string;
   type: string;
   discipline: string;
-  userId: string; // Adicionando o userId ao evento
+  userId: string;
 }
 
 const Calendar: React.FC = () => {
@@ -63,9 +63,9 @@ const Calendar: React.FC = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const user = auth.currentUser; // Obtendo o usuário autenticado
+      const user = auth.currentUser;
       if (user) {
-        const q = query(collection(db, "eventos"), where("userId", "==", user.uid)); // Filtrando eventos pelo userId
+        const q = query(collection(db, "eventos"), where("userId", "==", user.uid));
         const eventsSnapshot = await getDocs(q);
         const eventsList = eventsSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -155,39 +155,36 @@ const Calendar: React.FC = () => {
   };
 
   const handleSaveEvent = async () => {
-    const user = auth.currentUser; // Obtendo o usuário autenticado
+    const user = auth.currentUser;
     if (eventName && selectedDiscipline && user) {
+      const selectedDisciplineObj = disciplines.find(d => d.id === selectedDiscipline);
+      const disciplineName = selectedDisciplineObj?.nome || "";
       const newEvent: Event = {
         day: selectedDay!,
         month: selectedMonth!,
         year: selectedYear!,
         event: eventName,
         type: selectedType,
-        discipline: selectedDiscipline,
-        userId: user.uid, // Associando o evento ao userId
+        discipline: disciplineName,
+        userId: user.uid,
       };
 
       try {
         await addDoc(collection(db, "eventos"), newEvent);
         setEvents([...events, newEvent]);
+
+        // Adicionando o evento à disciplina correspondente
+        const disciplineDoc = doc(db, "disciplinas", selectedDiscipline);
+        await updateDoc(disciplineDoc, {
+          eventos: [...events, newEvent],
+        });
+
         handleCloseModal();
       } catch (error) {
         console.error("Erro ao salvar o evento: ", error);
       }
     } else {
       alert("Por favor, preencha todos os campos.");
-    }
-  };
-
-  const handleEditEvent = async (event: Event) => {
-    const updatedEvent = { ...event, event: eventName, type: selectedType, discipline: selectedDiscipline };
-    try {
-      const eventDoc = doc(db, "eventos", event.id!);
-      await updateDoc(eventDoc, updatedEvent);
-      setEvents(events.map((e) => (e.id === event.id ? updatedEvent : e)));
-      handleCloseModal();
-    } catch (error) {
-      console.error("Erro ao editar o evento: ", error);
     }
   };
 
@@ -218,7 +215,6 @@ const Calendar: React.FC = () => {
           <tbody>{renderCalendarDays()}</tbody>
         </table>
 
-        {/* Modal para adicionar/editar eventos */}
         {showModal && (
           <div className="modal">
             <div className="modal-content">
@@ -228,7 +224,6 @@ const Calendar: React.FC = () => {
                   eventsForSelectedDay.map((event) => (
                     <div key={event.id}>
                       <p>{event.event} - {event.type} ({event.discipline})</p>
-                      <button onClick={() => handleEditEvent(event)}>Editar</button>
                     </div>
                   ))
                 ) : (
@@ -248,8 +243,8 @@ const Calendar: React.FC = () => {
               >
                 <option value="">Selecione a disciplina</option>
                 {disciplines.map((discipline) => (
-                  <option key={discipline.id} value={discipline.name}>
-                    {discipline.name}
+                  <option key={discipline.id} value={discipline.id}>
+                    {discipline.nome}
                   </option>
                 ))}
               </select>
@@ -261,7 +256,7 @@ const Calendar: React.FC = () => {
                 <option value="trabalho">Trabalho</option>
               </select>
               <button onClick={handleSaveEvent}>Salvar Evento</button>
-              <button onClick={handleCloseModal}>Fechar</button>
+              <button onClick={handleCloseModal}>Cancelar</button>
             </div>
           </div>
         )}

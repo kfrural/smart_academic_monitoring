@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../services/firebaseConfig";
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../services/firebaseConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ProfilePage.css";
 
+interface UserData {
+  name: string;
+  phone: string;
+  profileImage: string;
+  courses: string[];
+  grades: { course: string; grade: string }[];
+}
+
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<any>(null);
-  const [userData, setUserData] = useState<any>({
+  const [userData, setUserData] = useState<UserData>({
     name: "",
     phone: "",
-    academicStatus: "",
+    profileImage: "",
     courses: [],
     grades: [],
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -40,12 +50,33 @@ const ProfilePage: React.FC = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setUserData(docSnap.data());
+        setUserData(docSnap.data() as UserData);
       } else {
-        console.error("Usuário não encontrado!");
+        console.error("Usuário não encontrado! Criando novo documento...");
+        await createUserDocument(uid);
+        const newDocSnap = await getDoc(docRef);
+        setUserData(newDocSnap.data() as UserData);
       }
     } catch (error) {
       console.error("Erro ao carregar dados do usuário:", error);
+    }
+  };
+
+  const createUserDocument = async (uid: string) => {
+    const userRef = doc(db, "usuarios", uid);
+    const userData: UserData = {
+      name: "",
+      phone: "",
+      profileImage: "",
+      courses: [],
+      grades: [],
+    };
+
+    try {
+      await setDoc(userRef, userData);
+      console.log("Documento do usuário criado com sucesso.");
+    } catch (error) {
+      console.error("Erro ao criar documento do usuário:", error);
     }
   };
 
@@ -59,29 +90,92 @@ const ProfilePage: React.FC = () => {
       });
   };
 
+  const calculateAverageGrade = (): string => {
+    if (userData.grades.length === 0) return "Sem notas registradas.";
+
+    const gradesAsNumbers = userData.grades
+      .map((grade) => parseFloat(grade.grade))
+      .filter((grade) => !isNaN(grade));
+    
+    if (gradesAsNumbers.length === 0) return "Sem notas válidas.";
+
+    const sum = gradesAsNumbers.reduce((acc, grade) => acc + grade, 0);
+    const average = sum / gradesAsNumbers.length;
+
+    return average.toFixed(2); // Retorna a média com duas casas decimais
+  };
+
   const handleSave = async () => {
     if (!user) return;
     setIsSaving(true);
     try {
       const userRef = doc(db, "usuarios", user.uid);
-      await updateDoc(userRef, {
+      const updatedData: Partial<UserData> = {
         name: userData.name,
         phone: userData.phone,
-        academicStatus: userData.academicStatus,
-      });
+      };
+  
+      if (imageFile) {
+        try {
+          const storageRef = ref(storage, `profileImages/${user.uid}`);
+          await uploadBytes(storageRef, imageFile);
+          const imageUrl = await getDownloadURL(storageRef);
+          updatedData.profileImage = imageUrl;
+  
+          // Atualiza o estado com a nova imagem
+          setUserData((prevData) => ({
+            ...prevData,
+            profileImage: imageUrl,
+          }));
+        } catch (uploadError) {
+          console.error("Erro ao fazer upload da imagem:", uploadError);
+          alert("Erro ao fazer upload da imagem: " + uploadError);
+          return; // Sai da função para não tentar salvar o usuário sem imagem
+        }
+      }
+  
+      await updateDoc(userRef, updatedData);
       setIsEditing(false);
     } catch (error) {
       console.error("Erro ao salvar as alterações:", error);
+      alert("Erro ao salvar as alterações: " + error);
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData({
-      ...userData,
+    setUserData((prevData) => ({
+      ...prevData,
       [e.target.name]: e.target.value,
-    });
+    }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  const handleAddCourse = () => {
+    const newCourse = prompt("Digite o nome do novo curso:");
+    if (newCourse) {
+      setUserData((prevData: UserData) => ({
+        ...prevData,
+        courses: [...prevData.courses, newCourse],
+      }));
+    }
+  };
+
+  const handleAddGrade = () => {
+    const course = prompt("Digite o nome do curso:");
+    const grade = prompt("Digite a nota:");
+    if (course && grade) {
+      setUserData((prevData: UserData) => ({
+        ...prevData,
+        grades: [...prevData.grades, { course, grade }],
+      }));
+    }
   };
 
   return (
@@ -114,12 +208,11 @@ const ProfilePage: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label>Status Acadêmico:</label>
+                    <label>Imagem de Perfil:</label>
                     <input
-                      type="text"
-                      name="academicStatus"
-                      value={userData.academicStatus}
-                      onChange={handleChange}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
                     />
                   </div>
                 </>
@@ -128,7 +221,13 @@ const ProfilePage: React.FC = () => {
                   <h3>Nome: {userData.name || user.displayName}</h3>
                   <h4>Email: {user.email}</h4>
                   <h4>Telefone: {userData.phone || "Não informado"}</h4>
-                  <h4>Status Acadêmico: {userData.academicStatus || "Não informado"}</h4>
+                  {userData.profileImage && (
+                    <img
+                      src={userData.profileImage}
+                      alt="Imagem de perfil"
+                      className="profile-image"
+                    />
+                  )}
                 </>
               )}
             </div>
@@ -137,7 +236,7 @@ const ProfilePage: React.FC = () => {
               <h3>Notas</h3>
               {userData.grades.length > 0 ? (
                 <ul>
-                  {userData.grades.map((grade: any, index: number) => (
+                  {userData.grades.map((grade, index) => (
                     <li key={index}>
                       <strong>{grade.course}:</strong> {grade.grade}
                     </li>
@@ -146,19 +245,29 @@ const ProfilePage: React.FC = () => {
               ) : (
                 <p>Sem notas registradas.</p>
               )}
+              {isEditing && (
+                <button onClick={handleAddGrade}>Adicionar Nota</button>
+              )}
             </div>
 
             <div className="courses-section">
               <h3>Cursos Matriculados</h3>
               {userData.courses.length > 0 ? (
                 <ul>
-                  {userData.courses.map((course: string, index: number) => (
+                  {userData.courses.map((course, index) => (
                     <li key={index}>{course}</li>
                   ))}
                 </ul>
               ) : (
                 <p>Sem cursos registrados.</p>
               )}
+              {isEditing && (
+                <button onClick={handleAddCourse}>Adicionar Curso</button>
+              )}
+            </div>
+
+            <div className="average-grade-section">
+              <h3>Média das Notas: {calculateAverageGrade()}</h3>
             </div>
 
             {isEditing ? (
