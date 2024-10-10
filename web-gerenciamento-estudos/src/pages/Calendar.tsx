@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore";
-import { db } from "../services/firebaseConfig";
+import { collection, addDoc, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
+import { db, auth } from "../services/firebaseConfig";// Certifique-se de importar a configuração do Firebase Auth
 import "../styles/Calendar.css";
 import Header from "../components/Header"; // Importando o Header
 import Footer from "../components/Footer"; // Importando o Footer
@@ -13,6 +13,7 @@ interface Event {
   event: string;
   type: string;
   discipline: string;
+  userId: string; // Adicionando o userId ao evento
 }
 
 const Calendar: React.FC = () => {
@@ -62,12 +63,16 @@ const Calendar: React.FC = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const eventsSnapshot = await getDocs(collection(db, "eventos"));
-      const eventsList = eventsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setEvents(eventsList as Event[]);
+      const user = auth.currentUser; // Obtendo o usuário autenticado
+      if (user) {
+        const q = query(collection(db, "eventos"), where("userId", "==", user.uid)); // Filtrando eventos pelo userId
+        const eventsSnapshot = await getDocs(q);
+        const eventsList = eventsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setEvents(eventsList as Event[]);
+      }
     };
     fetchEvents();
   }, []);
@@ -150,7 +155,8 @@ const Calendar: React.FC = () => {
   };
 
   const handleSaveEvent = async () => {
-    if (eventName && selectedDiscipline) {
+    const user = auth.currentUser; // Obtendo o usuário autenticado
+    if (eventName && selectedDiscipline && user) {
       const newEvent: Event = {
         day: selectedDay!,
         month: selectedMonth!,
@@ -158,6 +164,7 @@ const Calendar: React.FC = () => {
         event: eventName,
         type: selectedType,
         discipline: selectedDiscipline,
+        userId: user.uid, // Associando o evento ao userId
       };
 
       try {
@@ -186,98 +193,81 @@ const Calendar: React.FC = () => {
 
   return (
     <>
-    <Header />
-    <main className="calendar-container">
-      <div className="calendar-header">
-        <button onClick={() => changeMonth("prev")} className="month-nav">
-          Anterior
-        </button>
-        <h2>
-          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-        </h2>
-        <button onClick={() => changeMonth("next")} className="month-nav">
-          Próximo
-        </button>
-      </div>
-
-      <table className="calendar-table">
-        <thead>
-          <tr>
-            {daysOfWeek.map((day) => (
-              <th key={day}>{day}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>{renderCalendarDays()}</tbody>
-      </table>
-
-      {/* Modal para adicionar/editar eventos */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Eventos para o dia {selectedDay}</h3>
-            <div className="event-list">
-              {eventsForSelectedDay.length > 0 ? (
-                eventsForSelectedDay.map((event) => (
-                  <div key={event.id} className={`event ${event.type}`}>
-                    {event.event} - {event.type} ({event.discipline})
-                  </div>
-                ))
-              ) : (
-                <p>Nenhum evento para este dia.</p>
-              )}
-            </div>
-            <h4>Cadastrar Novo Evento</h4>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveEvent();
-            }}>
-              <div className="input-group">
-                <input
-                  type="text"
-                  placeholder="Nome do Evento"
-                  value={eventName}
-                  onChange={(e) => setEventName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-group">
-                <select
-                  value={selectedDiscipline}
-                  onChange={(e) => setSelectedDiscipline(e.target.value)}
-                  required
-                >
-                  <option value="">Selecione uma disciplina</option>
-                  {disciplines.map((discipline) => (
-                    <option key={discipline.id} value={discipline.name || discipline.nome}>
-                      {discipline.name || discipline.nome}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="input-group">
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  required
-                >
-                  <option value="prova">Prova</option>
-                  <option value="trabalho">Trabalho</option>
-                  <option value="outro">Outro</option>
-                </select>
-              </div>
-              <div className="button-group">
-                <button type="submit" className="save-button">Salvar Evento</button>
-                <button onClick={handleCloseModal} className="close-button">Fechar</button>
-              </div>
-            </form>
-          </div>
+      <Header />
+      <main className="calendar-container">
+        <div className="calendar-header">
+          <button onClick={() => changeMonth("prev")} className="month-nav">
+            Anterior
+          </button>
+          <h2>
+            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+          </h2>
+          <button onClick={() => changeMonth("next")} className="month-nav">
+            Próximo
+          </button>
         </div>
-      )}
 
-    </main>
-    <Footer />
-  </>
+        <table className="calendar-table">
+          <thead>
+            <tr>
+              {daysOfWeek.map((day) => (
+                <th key={day}>{day}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{renderCalendarDays()}</tbody>
+        </table>
+
+        {/* Modal para adicionar/editar eventos */}
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <h3>Eventos para o dia {selectedDay}</h3>
+              <div className="event-list">
+                {eventsForSelectedDay.length > 0 ? (
+                  eventsForSelectedDay.map((event) => (
+                    <div key={event.id}>
+                      <p>{event.event} - {event.type} ({event.discipline})</p>
+                      <button onClick={() => handleEditEvent(event)}>Editar</button>
+                    </div>
+                  ))
+                ) : (
+                  <p>Nenhum evento encontrado.</p>
+                )}
+              </div>
+              <h3>Adicionar Evento</h3>
+              <input
+                type="text"
+                placeholder="Nome do evento"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+              />
+              <select
+                value={selectedDiscipline}
+                onChange={(e) => setSelectedDiscipline(e.target.value)}
+              >
+                <option value="">Selecione a disciplina</option>
+                {disciplines.map((discipline) => (
+                  <option key={discipline.id} value={discipline.name}>
+                    {discipline.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+              >
+                <option value="prova">Prova</option>
+                <option value="trabalho">Trabalho</option>
+              </select>
+              <button onClick={handleSaveEvent}>Salvar Evento</button>
+              <button onClick={handleCloseModal}>Fechar</button>
+            </div>
+          </div>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 };
 

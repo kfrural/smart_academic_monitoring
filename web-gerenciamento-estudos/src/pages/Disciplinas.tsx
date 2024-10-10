@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, addDoc, updateDoc, doc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom"; // Importando o hook para navegação
+import { collection, getDocs, addDoc, updateDoc, doc, query, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { db } from "../services/firebaseConfig";
+import { auth } from "../services/firebaseConfig"; // Firebase Auth para obter o usuário logado
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/Disciplinas.css";
@@ -9,26 +10,35 @@ import "../styles/Disciplinas.css";
 const Disciplinas: React.FC = () => {
   const [disciplinas, setDisciplinas] = useState<any[]>([]);
   const [newDisciplina, setNewDisciplina] = useState("");
-  const navigate = useNavigate(); // Inicializando o hook de navegação
+  const [userId, setUserId] = useState<string | null>(null); // Para armazenar o ID do usuário logado
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDisciplinas = async () => {
-      const disciplinasSnapshot = await getDocs(collection(db, "disciplinas"));
-      const disciplinasList = disciplinasSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setDisciplinas(disciplinasList);
-    };
-
-    fetchDisciplinas();
+    // Obtendo o usuário atual do Firebase Authentication
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUserId(currentUser.uid);
+      fetchDisciplinas(currentUser.uid); // Buscando disciplinas relacionadas ao usuário
+    }
   }, []);
+
+  // Função para buscar disciplinas do usuário logado
+  const fetchDisciplinas = async (uid: string) => {
+    const disciplinasQuery = query(collection(db, "disciplinas"), where("userId", "==", uid));
+    const disciplinasSnapshot = await getDocs(disciplinasQuery);
+    const disciplinasList = disciplinasSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setDisciplinas(disciplinasList);
+  };
 
   const handleAddDisciplina = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newDisciplina) {
-      await addDoc(collection(db, "disciplinas"), { nome: newDisciplina });
+    if (newDisciplina && userId) {
+      await addDoc(collection(db, "disciplinas"), {
+        nome: newDisciplina,
+        userId: userId // Associando a disciplina ao ID do usuário logado
+      });
       setNewDisciplina("");
-      const disciplinasSnapshot = await getDocs(collection(db, "disciplinas"));
-      const disciplinasList = disciplinasSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setDisciplinas(disciplinasList);
+      fetchDisciplinas(userId); // Atualizando a lista de disciplinas
     }
   };
 
@@ -37,14 +47,11 @@ const Disciplinas: React.FC = () => {
     if (newName) {
       const disciplinaRef = doc(db, "disciplinas", id);
       await updateDoc(disciplinaRef, { nome: newName });
-      const disciplinasSnapshot = await getDocs(collection(db, "disciplinas"));
-      const disciplinasList = disciplinasSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setDisciplinas(disciplinasList);
+      if (userId) fetchDisciplinas(userId); // Atualizando as disciplinas
     }
   };
 
   const handleSelectDisciplina = (disciplinaId: string) => {
-    // Redireciona para a página de detalhes da disciplina selecionada
     navigate(`/disciplina/${disciplinaId}`);
   };
 

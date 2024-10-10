@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Disciplinas from "./pages/Disciplinas";
 import DisciplinaDetails from "./pages/DisciplinaDetails";
+import Profile from "./pages/ProfilePage";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/disciplinas" element={<Disciplinas />} />
         <Route path="/disciplina/:id" element={<DisciplinaDetails />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
