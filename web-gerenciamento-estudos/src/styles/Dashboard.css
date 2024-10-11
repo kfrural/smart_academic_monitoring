@@ -2,10 +2,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-start; /* Alinhar ao topo para melhor uso do espaço */
+  padding: 80px 20px; /* Maior espaçamento nas laterais */
+  background-color: #f5f5f5; /* Cor de fundo suave */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  max-width: 800px; /* Limitar a largura máxima */
+  margin: 0 auto; /* Centralizar horizontalmente */
 }
 
 h1 {
-  margin-bottom: 20px;
+  font-size: 2.5em; /* Aumentar o tamanho da fonte */
+  color: #333; /* Cor escura para melhor legibilidade */
+  margin-bottom: 30px; /* Aumentar o espaço abaixo do título */
+  text-align: center; /* Centralizar o texto */
 }
+
+h2 {
+  font-size: 1.8em; /* Tamanho do subtítulo */
+  color: #555; /* Cor um pouco mais clara */
+  margin: 20px 0; /* Espaçamento acima e abaixo do subtítulo */
+}
+
+table {
+  width: 100%; /* Ocupa toda a largura do contêiner */
+  border-collapse: collapse; /* Remover espaços entre as células */
+  margin-top: 20px; /* Espaço acima da tabela */
+}
+
+th, td {
+  padding: 12px; /* Espaçamento interno nas células */
+  text-align: left; /* Alinhamento do texto à esquerda */
+  border-bottom: 1px solid #ddd; /* Linha separadora entre as linhas */
+}
+
+th {
+  background-color: #007bff; /* Cor de fundo dos cabeçalhos */
+  color: white; /* Texto branco para os cabeçalhos */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Cor de fundo ao passar o mouse sobre as linhas */
+}
+

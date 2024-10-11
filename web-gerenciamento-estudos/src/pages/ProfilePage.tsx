@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signOut, onAuthStateChanged, User } from "firebase/auth";
 import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../services/firebaseConfig";
@@ -13,17 +13,15 @@ interface UserData {
   phone: string;
   profileImage: string;
   courses: string[];
-  grades: { course: string; grade: string }[];
 }
 
 const ProfilePage: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData>({
     name: "",
     phone: "",
     profileImage: "",
     courses: [],
-    grades: [],
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -50,7 +48,8 @@ const ProfilePage: React.FC = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setUserData(docSnap.data() as UserData);
+        const fetchedData = docSnap.data() as UserData;
+        setUserData(fetchedData);
       } else {
         console.error("Usuário não encontrado! Criando novo documento...");
         await createUserDocument(uid);
@@ -64,91 +63,68 @@ const ProfilePage: React.FC = () => {
 
   const createUserDocument = async (uid: string) => {
     const userRef = doc(db, "usuarios", uid);
-    const userData: UserData = {
+    const initialData: UserData = {
       name: "",
       phone: "",
       profileImage: "",
       courses: [],
-      grades: [],
     };
 
     try {
-      await setDoc(userRef, userData);
+      await setDoc(userRef, initialData);
       console.log("Documento do usuário criado com sucesso.");
     } catch (error) {
       console.error("Erro ao criar documento do usuário:", error);
     }
   };
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error("Erro ao sair:", error);
-      });
-  };
-
-  const calculateAverageGrade = (): string => {
-    if (userData.grades.length === 0) return "Sem notas registradas.";
-
-    const gradesAsNumbers = userData.grades
-      .map((grade) => parseFloat(grade.grade))
-      .filter((grade) => !isNaN(grade));
-    
-    if (gradesAsNumbers.length === 0) return "Sem notas válidas.";
-
-    const sum = gradesAsNumbers.reduce((acc, grade) => acc + grade, 0);
-    const average = sum / gradesAsNumbers.length;
-
-    return average.toFixed(2); // Retorna a média com duas casas decimais
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      console.error("Erro ao sair:", error);
+    }
   };
 
   const handleSave = async () => {
     if (!user) return;
     setIsSaving(true);
-    try {
-      const userRef = doc(db, "usuarios", user.uid);
-      const updatedData: Partial<UserData> = {
-        name: userData.name,
-        phone: userData.phone,
-      };
-  
-      if (imageFile) {
-        try {
-          const storageRef = ref(storage, `profileImages/${user.uid}`);
-          await uploadBytes(storageRef, imageFile);
-          const imageUrl = await getDownloadURL(storageRef);
-          updatedData.profileImage = imageUrl;
-  
-          // Atualiza o estado com a nova imagem
-          setUserData((prevData) => ({
-            ...prevData,
-            profileImage: imageUrl,
-          }));
-        } catch (uploadError) {
-          console.error("Erro ao fazer upload da imagem:", uploadError);
-          alert("Erro ao fazer upload da imagem: " + uploadError);
-          return; // Sai da função para não tentar salvar o usuário sem imagem
-        }
+    const userRef = doc(db, "usuarios", user.uid);
+    const updatedData: Partial<UserData> = {
+      name: userData.name,
+      phone: userData.phone,
+      courses: userData.courses,
+    };
+
+    if (imageFile) {
+      try {
+        const storageRef = ref(storage, `profileImages/${user.uid}`);
+        await uploadBytes(storageRef, imageFile);
+        const imageUrl = await getDownloadURL(storageRef);
+        updatedData.profileImage = imageUrl;
+        setUserData((prevData) => ({ ...prevData, profileImage: imageUrl }));
+      } catch (error) {
+        console.error("Erro ao fazer upload da imagem:", error);
+        alert("Erro ao fazer upload da imagem.");
+        setIsSaving(false);
+        return;
       }
-  
+    }
+
+    try {
       await updateDoc(userRef, updatedData);
       setIsEditing(false);
     } catch (error) {
       console.error("Erro ao salvar as alterações:", error);
-      alert("Erro ao salvar as alterações: " + error);
+      alert("Erro ao salvar as alterações.");
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
+    setUserData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,20 +136,9 @@ const ProfilePage: React.FC = () => {
   const handleAddCourse = () => {
     const newCourse = prompt("Digite o nome do novo curso:");
     if (newCourse) {
-      setUserData((prevData: UserData) => ({
+      setUserData((prevData) => ({
         ...prevData,
         courses: [...prevData.courses, newCourse],
-      }));
-    }
-  };
-
-  const handleAddGrade = () => {
-    const course = prompt("Digite o nome do curso:");
-    const grade = prompt("Digite a nota:");
-    if (course && grade) {
-      setUserData((prevData: UserData) => ({
-        ...prevData,
-        grades: [...prevData.grades, { course, grade }],
       }));
     }
   };
@@ -191,29 +156,15 @@ const ProfilePage: React.FC = () => {
                 <>
                   <div>
                     <label>Nome:</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={userData.name}
-                      onChange={handleChange}
-                    />
+                    <input type="text" name="name" value={userData.name} onChange={handleChange} />
                   </div>
                   <div>
                     <label>Telefone:</label>
-                    <input
-                      type="text"
-                      name="phone"
-                      value={userData.phone}
-                      onChange={handleChange}
-                    />
+                    <input type="text" name="phone" value={userData.phone} onChange={handleChange} />
                   </div>
                   <div>
                     <label>Imagem de Perfil:</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                    />
+                    <input type="file" accept="image/*" onChange={handleFileChange} />
                   </div>
                 </>
               ) : (
@@ -229,24 +180,6 @@ const ProfilePage: React.FC = () => {
                     />
                   )}
                 </>
-              )}
-            </div>
-
-            <div className="grades-section">
-              <h3>Notas</h3>
-              {userData.grades.length > 0 ? (
-                <ul>
-                  {userData.grades.map((grade, index) => (
-                    <li key={index}>
-                      <strong>{grade.course}:</strong> {grade.grade}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Sem notas registradas.</p>
-              )}
-              {isEditing && (
-                <button onClick={handleAddGrade}>Adicionar Nota</button>
               )}
             </div>
 
@@ -266,33 +199,21 @@ const ProfilePage: React.FC = () => {
               )}
             </div>
 
-            <div className="average-grade-section">
-              <h3>Média das Notas: {calculateAverageGrade()}</h3>
-            </div>
-
             {isEditing ? (
-              <button
-                className="save-button"
-                onClick={handleSave}
-                disabled={isSaving}
-              >
-                {isSaving ? "Salvando..." : "Salvar Alterações"}
+              <button className="save-button" onClick={handleSave} disabled={isSaving}>
+                {isSaving ? "Salvando..." : "Salvar"}
               </button>
             ) : (
-              <button
-                className="edit-button"
-                onClick={() => setIsEditing(true)}
-              >
-                Editar Perfil
+              <button className="edit-button" onClick={() => setIsEditing(true)}>
+                Editar
               </button>
             )}
-
             <button className="logout-button" onClick={handleLogout}>
               Sair
             </button>
           </>
         ) : (
-          <h2>Carregando dados do usuário...</h2>
+          <p>Carregando...</p>
         )}
       </div>
       <Footer />

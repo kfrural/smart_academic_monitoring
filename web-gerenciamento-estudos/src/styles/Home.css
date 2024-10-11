@@ -1,0 +1,38 @@
+.home-container {
+    text-align: center;
+    background-color: #f4f4f9;
+  }
+  
+  .home-header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .home-features {
+    margin-top: 20px;
+  }
+  
+  .home-features ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .home-features li {
+    margin: 10px 0;
+  }
+  
+  .home-features a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .home-motivational {
+    margin-top: 30px;
+    font-style: italic;
+    border-left: 4px solid #007bff;
+    padding-left: 15px;
+    color: #555;
+  }
+  

@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, updateDoc, doc, query, where } from "firebase/firestore";
-import { db, auth } from "../services/firebaseConfig"; // Certifique-se de importar a configuração do Firebase Auth
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { db, auth } from "../services/firebaseConfig"; 
 import "../styles/Calendar.css";
-import Header from "../components/Header"; // Importando o Header
-import Footer from "../components/Footer"; // Importando o Footer
+import Header from "../components/Header"; 
+import Footer from "../components/Footer"; 
 
 interface Event {
-  id?: string;
   day: number;
   month: number;
   year: number;
   event: string;
   type: string;
-  discipline: string;
-  userId: string;
+}
+
+interface Discipline {
+  id: string;
+  nome: string;
+  eventos?: Event[];
 }
 
 const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [events, setEvents] = useState<Event[]>([]);
-  const [disciplines, setDisciplines] = useState<any[]>([]);
+  const [disciplines, setDisciplines] = useState<Discipline[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [eventName, setEventName] = useState("");
   const [selectedDiscipline, setSelectedDiscipline] = useState("");
   const [selectedType, setSelectedType] = useState("prova");
@@ -55,26 +55,10 @@ const Calendar: React.FC = () => {
       const disciplinesList = disciplinesSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }));
+      })) as Discipline[];
       setDisciplines(disciplinesList);
     };
     fetchDisciplines();
-  }, []);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const q = query(collection(db, "eventos"), where("userId", "==", user.uid));
-        const eventsSnapshot = await getDocs(q);
-        const eventsList = eventsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setEvents(eventsList as Event[]);
-      }
-    };
-    fetchEvents();
   }, []);
 
   const renderCalendarDays = () => {
@@ -90,12 +74,14 @@ const Calendar: React.FC = () => {
         currentDate.getMonth() === today.getMonth() &&
         currentDate.getFullYear() === today.getFullYear();
 
-      const eventsForDay = events.filter(
-        (event) =>
-          event.day === day &&
-          event.month === currentDate.getMonth() &&
-          event.year === currentDate.getFullYear()
-      );
+      const eventsForDay = disciplines
+        .flatMap((discipline) => discipline.eventos || [])
+        .filter(
+          (event) =>
+            event.day === day &&
+            event.month === currentDate.getMonth() &&
+            event.year === currentDate.getFullYear()
+        );
 
       days.push(
         <td
@@ -106,9 +92,9 @@ const Calendar: React.FC = () => {
           {day}
           {eventsForDay.length > 0 && (
             <div className="events">
-              {eventsForDay.map((event) => (
-                <div key={event.id} className={`event ${event.type}`}>
-                  {event.event} - {event.type} ({event.discipline})
+              {eventsForDay.map((event, index) => (
+                <div key={index} className={`event ${event.type}`}>
+                  {event.event} - {event.type}
                 </div>
               ))}
             </div>
@@ -133,15 +119,14 @@ const Calendar: React.FC = () => {
 
   const handleOpenModal = (day: number) => {
     setSelectedDay(day);
-    setSelectedMonth(currentDate.getMonth());
-    setSelectedYear(currentDate.getFullYear());
-
-    const dayEvents = events.filter(
-      (event) =>
-        event.day === day &&
-        event.month === currentDate.getMonth() &&
-        event.year === currentDate.getFullYear()
-    );
+    const dayEvents = disciplines
+      .flatMap((discipline) => discipline.eventos || [])
+      .filter(
+        (event) =>
+          event.day === day &&
+          event.month === currentDate.getMonth() &&
+          event.year === currentDate.getFullYear()
+      );
 
     setEventsForSelectedDay(dayEvents);
     setShowModal(true);
@@ -156,29 +141,27 @@ const Calendar: React.FC = () => {
 
   const handleSaveEvent = async () => {
     const user = auth.currentUser;
-    if (eventName && selectedDiscipline && user) {
-      const selectedDisciplineObj = disciplines.find(d => d.id === selectedDiscipline);
-      const disciplineName = selectedDisciplineObj?.nome || "";
+    if (eventName && selectedDiscipline && user && selectedDay !== null) {
       const newEvent: Event = {
-        day: selectedDay!,
-        month: selectedMonth!,
-        year: selectedYear!,
+        day: selectedDay,
+        month: currentDate.getMonth(),
+        year: currentDate.getFullYear(),
         event: eventName,
         type: selectedType,
-        discipline: disciplineName,
-        userId: user.uid,
       };
 
       try {
-        await addDoc(collection(db, "eventos"), newEvent);
-        setEvents([...events, newEvent]);
+        // Atualizando os eventos da disciplina
+        const updatedDiscipline = disciplines.find(d => d.id === selectedDiscipline);
+        const updatedEvents = [...(updatedDiscipline?.eventos || []), newEvent];
 
-        // Adicionando o evento à disciplina correspondente
-        const disciplineDoc = doc(db, "disciplinas", selectedDiscipline);
-        await updateDoc(disciplineDoc, {
-          eventos: [...events, newEvent],
-        });
+        await updateDoc(doc(db, "disciplinas", selectedDiscipline), { eventos: updatedEvents });
 
+        // Atualiza a lista de disciplinas localmente
+        setDisciplines(disciplines.map(d =>
+          d.id === selectedDiscipline ? { ...d, eventos: updatedEvents } : d
+        ));
+        
         handleCloseModal();
       } catch (error) {
         console.error("Erro ao salvar o evento: ", error);
@@ -221,9 +204,9 @@ const Calendar: React.FC = () => {
               <h3>Eventos para o dia {selectedDay}</h3>
               <div className="event-list">
                 {eventsForSelectedDay.length > 0 ? (
-                  eventsForSelectedDay.map((event) => (
-                    <div key={event.id}>
-                      <p>{event.event} - {event.type} ({event.discipline})</p>
+                  eventsForSelectedDay.map((event, index) => (
+                    <div key={index}>
+                      <p>{event.event} - {event.type}</p>
                     </div>
                   ))
                 ) : (
@@ -256,7 +239,7 @@ const Calendar: React.FC = () => {
                 <option value="trabalho">Trabalho</option>
               </select>
               <button onClick={handleSaveEvent}>Salvar Evento</button>
-              <button onClick={handleCloseModal}>Cancelar</button>
+              <button onClick={handleCloseModal}>Fechar</button>
             </div>
           </div>
         )}

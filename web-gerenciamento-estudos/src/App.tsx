@@ -9,12 +9,14 @@ import Calendar from "./pages/Calendar";
 import Disciplinas from "./pages/Disciplinas";
 import DisciplinaDetails from "./pages/DisciplinaDetails";
 import Profile from "./pages/ProfilePage";
+import Home from "./pages/Home";
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
