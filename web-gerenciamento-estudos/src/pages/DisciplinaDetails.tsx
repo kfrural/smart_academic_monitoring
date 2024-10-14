@@ -4,7 +4,7 @@ import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../services/firebaseConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Pie } from "react-chartjs-2"; // Importando o componente Pie para gráficos
+import { Pie } from "react-chartjs-2";
 import "../styles/DisciplinaDetails.css";
 
 interface Grade {
@@ -21,7 +21,7 @@ interface Schedule {
 interface Exam {
   name: string;
   type: string;
-  date: string; // Adicionando a propriedade de data
+  date: string;
 }
 
 interface Discipline {
@@ -65,7 +65,7 @@ const DisciplineDetails: React.FC = () => {
   };
 
   const handleAddGrade = async () => {
-    if (!discipline || !newGrade.examName) return; // Verifica se o nome da prova está preenchido
+    if (!discipline || !newGrade.examName) return;
 
     try {
       const docRef = doc(db, "disciplinas", discipline.id);
@@ -76,7 +76,7 @@ const DisciplineDetails: React.FC = () => {
         ...prev!,
         grades: [...(prev?.grades || []), newGrade],
       }));
-      setNewGrade({ score: 0, maxScore: 0, examName: "" }); // Resetando o formulário
+      setNewGrade({ score: 0, maxScore: 0, examName: "" });
     } catch (error) {
       console.error("Erro ao adicionar nota:", error);
     }
@@ -94,14 +94,14 @@ const DisciplineDetails: React.FC = () => {
         ...prev!,
         schedules: [...(prev?.schedules || []), newSchedule],
       }));
-      setNewSchedule({ day: "", time: "" }); // Resetando o formulário
+      setNewSchedule({ day: "", time: "" }); 
     } catch (error) {
       console.error("Erro ao adicionar horário:", error);
     }
   };
 
   const handleAddExam = async () => {
-    if (!discipline || !newExam.name || !newExam.date) return; // Verifica se o nome da prova e a data estão preenchidos
+    if (!discipline || !newExam.name || !newExam.date) return;
 
     try {
       const docRef = doc(db, "disciplinas", discipline.id);
@@ -112,7 +112,7 @@ const DisciplineDetails: React.FC = () => {
         ...prev!,
         exams: [...(prev?.exams || []), newExam],
       }));
-      setNewExam({ name: "", type: "Prova", date: "" }); // Resetando o formulário
+      setNewExam({ name: "", type: "Prova", date: "" });
     } catch (error) {
       console.error("Erro ao adicionar prova:", error);
     }
@@ -134,29 +134,26 @@ const DisciplineDetails: React.FC = () => {
     return ((totalObtained / totalNeeded) * 100).toFixed(2);
   };
 
-  // Dados do gráfico de pizza
-  const totalScore = discipline?.grades?.reduce((acc, grade) => acc + grade.maxScore, 0) || 1; // Evita divisão por zero
+  const totalScore = discipline?.grades?.reduce((acc, grade) => acc + grade.maxScore, 0) || 1;
   const totalObtained = discipline?.grades?.reduce((acc, grade) => acc + grade.score, 0) || 0;
 
   const pieData = {
     labels: ["Nota Obtida", "Nota Faltante"],
     datasets: [
       {
-        data: [totalObtained, totalScore - totalObtained], // Proporção de notas obtidas e faltantes
-        backgroundColor: ["rgba(75,192,192,0.6)", "rgba(255,99,132,0.3)"], // Cores para o gráfico
+        data: [totalObtained, totalScore - totalObtained],
+        backgroundColor: ["rgba(75,192,192,0.6)", "rgba(255,99,132,0.3)"],
         borderColor: ["rgba(75,192,192,1)", "rgba(255,99,132,1)"],
         borderWidth: 1,
       },
     ],
   };
 
-  // Opções do gráfico
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Permitir tamanho personalizado
+    maintainAspectRatio: false,
   };
 
-  // Horários disponíveis
   const availableTimes = ["Primeiro (7:00 - 8:40)", "Segundo (9:10 - 11:00)", "Terceiro (13:00 - 14:40)", "Quarto (15:10 - 17:00)", "Quinto (18:30 - 20:10)", "Sexto (20:40 - 22:00)"];
 
   return (
@@ -168,7 +165,6 @@ const DisciplineDetails: React.FC = () => {
             <div className="details">
               <h1>Disciplina: {discipline.nome}</h1>
 
-              {/* Exibir Horários de Aula */}
               <h2>Horários de Aula</h2>
               <ul>
                 {discipline.schedules?.map((schedule, index) => (
@@ -198,7 +194,6 @@ const DisciplineDetails: React.FC = () => {
               </select>
               <button onClick={handleAddSchedule}>Adicionar Horário</button>
 
-              {/* Exibir Datas de Provas */}
               <h2>Datas de Provas e Trabalhos</h2>
               <ul>
                 {discipline.exams?.map((exam, index) => (
@@ -228,7 +223,6 @@ const DisciplineDetails: React.FC = () => {
               />
               <button onClick={handleAddExam}>Adicionar Prova</button>
 
-              {/* Exibir Notas */}
               <h2>Notas</h2>
               <ul>
                 {discipline.grades?.map((grade, index) => (
@@ -259,7 +253,6 @@ const DisciplineDetails: React.FC = () => {
               <button onClick={handleAddGrade}>Adicionar Nota</button>
             </div>
 
-            {/* Gráfico de Pizza e Estatísticas */}
             <div className="chart-container">
               <div className="statistics">
                 <h2>Média Ponderada: {calculateWeightedAverage()}%</h2>

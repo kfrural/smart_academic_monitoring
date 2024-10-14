@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, addDoc, updateDoc, doc, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../services/firebaseConfig";
-import { auth } from "../services/firebaseConfig"; // Firebase Auth para obter o usuário logado
+import { auth } from "../services/firebaseConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/Disciplinas.css";
@@ -10,19 +10,17 @@ import "../styles/Disciplinas.css";
 const Disciplinas: React.FC = () => {
   const [disciplinas, setDisciplinas] = useState<any[]>([]);
   const [newDisciplina, setNewDisciplina] = useState("");
-  const [userId, setUserId] = useState<string | null>(null); // Para armazenar o ID do usuário logado
+  const [userId, setUserId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtendo o usuário atual do Firebase Authentication
     const currentUser = auth.currentUser;
     if (currentUser) {
       setUserId(currentUser.uid);
-      fetchDisciplinas(currentUser.uid); // Buscando disciplinas relacionadas ao usuário
+      fetchDisciplinas(currentUser.uid);
     }
   }, []);
 
-  // Função para buscar disciplinas do usuário logado
   const fetchDisciplinas = async (uid: string) => {
     const disciplinasQuery = query(collection(db, "disciplinas"), where("userId", "==", uid));
     const disciplinasSnapshot = await getDocs(disciplinasQuery);
@@ -35,10 +33,10 @@ const Disciplinas: React.FC = () => {
     if (newDisciplina && userId) {
       await addDoc(collection(db, "disciplinas"), {
         nome: newDisciplina,
-        userId: userId // Associando a disciplina ao ID do usuário logado
+        userId: userId
       });
       setNewDisciplina("");
-      fetchDisciplinas(userId); // Atualizando a lista de disciplinas
+      fetchDisciplinas(userId);
     }
   };
 
@@ -47,7 +45,7 @@ const Disciplinas: React.FC = () => {
     if (newName) {
       const disciplinaRef = doc(db, "disciplinas", id);
       await updateDoc(disciplinaRef, { nome: newName });
-      if (userId) fetchDisciplinas(userId); // Atualizando as disciplinas
+      if (userId) fetchDisciplinas(userId);
     }
   };
 

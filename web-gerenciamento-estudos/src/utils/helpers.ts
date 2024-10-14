@@ -1,25 +1,38 @@
-// src/services/firebaseConfig.ts
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // Importando o Firestore
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+export const formatDate = (date: Date, format: string): string => {
+  const options: Intl.DateTimeFormatOptions = {};
+  
+  if (format === 'short') {
+    options.year = 'numeric';
+    options.month = 'short';
+    options.day = 'numeric';
+  } else if (format === 'long') {
+    options.year = 'numeric';
+    options.month = 'long';
+    options.day = 'numeric';
+    options.weekday = 'long';
+  }
+  
+  return new Intl.DateTimeFormat('pt-BR', options).format(date);
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const db = getFirestore(app); // Inicializando o Firestore
+export const capitalizeFirstLetter = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
-// Exportando o db para uso em outros arquivos
-export { db, analytics, auth }; // Adicione o db aqui
+export const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+export const generateUniqueId = (): string => {
+  return 'xxxx-xxxx-4xxx-yxxx-xxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
+export const trimString = (string: string): string => {
+  return string.trim();
+};
+

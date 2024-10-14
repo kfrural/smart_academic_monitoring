@@ -1,7 +1,5 @@
-/* Disciplinas.css */
-
 .disciplinas-container {
-  max-width: 900px; /* Aumente a largura máxima do container */
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -13,7 +11,7 @@ h1 {
   margin-bottom: 40px;
   font-size: 36px;
   border-bottom: 2px solid #007BFF;
-  padding-bottom: 20px;/* Espaço abaixo do título */
+  padding-bottom: 20px;
 }
 
 .add-disciplina-form {
@@ -24,11 +22,11 @@ h1 {
 
 .input-disciplina {
   flex: 1;
-  padding: 12px; /* Aumente o padding para dar mais espaço */
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-right: 10px;
-  font-size: 16px; /* Aumente o tamanho da fonte */
+  font-size: 16px;
 }
 
 .add-button {
@@ -38,7 +36,7 @@ h1 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px; /* Aumente o tamanho da fonte */
+  font-size: 16px;
 }
 
 .add-button:hover {
@@ -46,45 +44,45 @@ h1 {
 }
 
 .disciplinas-list {
-  display: grid; /* Use grid para melhor layout */
-  grid-template-columns: repeat(3, 1fr); /* Três disciplinas por fileira */
-  gap: 25px; /* Espaço entre os cards */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
 
 .disciplina-card {
   background-color: #f9f9f9;
-  padding: 20px; /* Aumente o padding para dar mais espaço */
+  padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 8px; /* Aumente o raio da borda para cantos mais arredondados */
+  border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s; /* Transição suave para o efeito de hover */
+  transition: transform 0.2s;
 }
 
 .disciplina-card:hover {
-  transform: translateY(-5px); /* Levante o cartão ao passar o mouse */
+  transform: translateY(-5px);
 }
 
 .disciplina-card h3 {
   margin: 0 0 10px;
-  font-size: 20px; /* Aumente o tamanho da fonte do título */
-  color: #333; /* Cor do texto do título */
+  font-size: 20px;
+  color: #333;
 }
 
 .disciplina-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px; /* Espaço acima dos botões */
+  margin-top: 15px;
 }
 
 .edit-button {
   background-color: #007BFF;
   color: white;
   border: none;
-  padding: 10px 16px; /* Aumente o padding para dar mais espaço */
+  padding: 10px 16px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px; /* Aumente o tamanho da fonte */
-  transition: background-color 0.2s; /* Transição suave para o efeito de hover */
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .edit-button:hover {
@@ -94,7 +92,7 @@ h1 {
 .dashboard-link {
   color: #007BFF;
   text-decoration: none;
-  font-size: 14px; /* Aumente o tamanho da fonte */
+  font-size: 14px;
 }
 
 .dashboard-link:hover {

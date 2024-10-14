@@ -151,13 +151,11 @@ const Calendar: React.FC = () => {
       };
 
       try {
-        // Atualizando os eventos da disciplina
         const updatedDiscipline = disciplines.find(d => d.id === selectedDiscipline);
         const updatedEvents = [...(updatedDiscipline?.eventos || []), newEvent];
 
         await updateDoc(doc(db, "disciplinas", selectedDiscipline), { eventos: updatedEvents });
 
-        // Atualiza a lista de disciplinas localmente
         setDisciplines(disciplines.map(d =>
           d.id === selectedDiscipline ? { ...d, eventos: updatedEvents } : d
         ));

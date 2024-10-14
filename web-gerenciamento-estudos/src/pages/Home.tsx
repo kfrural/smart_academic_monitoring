@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Home.css'; // Adicione estilos personalizados aqui
-import Footer from '../components/Footer'; // Importar o componente de rodapé
-import Header from '../components/Header'; // Importar o componente de cabeçalho
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // Importar funções do Firebase
-import { db } from '../services/firebaseConfig'; // Importar a configuração do Firebase
-import { collection, query, where, getDocs } from 'firebase/firestore'; // Importar funções do Firestore
+import '../styles/Home.css';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from '../services/firebaseConfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const Home: React.FC = () => {
     const [userId, setUserId] = useState<string | null>(null);
-    const [events, setEvents] = useState<any[]>([]); // Estado para armazenar eventos
+    const [events, setEvents] = useState<any[]>([]);
     const navigate = useNavigate();
     const auth = getAuth();
 
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserId(user.uid);
-                fetchEvents(); // Busca eventos assim que o usuário está autenticado
+                fetchEvents();
             } else {
                 setUserId(null);
                 navigate("/login");
@@ -30,16 +30,16 @@ const Home: React.FC = () => {
     const fetchEvents = async () => {
         try {
             const today = new Date();
-            const todayString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
-            const eventsRef = collection(db, 'events'); // Acesse a coleção 'events' no Firestore
-            const q = query(eventsRef, where('date', '==', todayString)); // Filtra os eventos para o dia de hoje
+            const todayString = today.toISOString().split('T')[0];
+            const eventsRef = collection(db, 'eventos');
+            const q = query(eventsRef, where('date', '==', todayString));
             const querySnapshot = await getDocs(q);
 
             const fetchedEvents: any[] = [];
             querySnapshot.forEach((doc) => {
-                fetchedEvents.push({ id: doc.id, ...doc.data() }); // Adiciona os dados dos eventos
+                fetchedEvents.push({ id: doc.id, ...doc.data() });
             });
-            setEvents(fetchedEvents); // Atualiza o estado com os eventos obtidos
+            setEvents(fetchedEvents);
         } catch (error) {
             console.error("Erro ao buscar eventos:", error);
         }
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 
     return (
         <div className="home-container">
-            <Header /> {/* Adiciona o cabeçalho */}
+            <Header />
             
             <header className="home-header">
                 <h1>Bem-vindo(a)!</h1>
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
                 {events.length > 0 ? (
                     <ul>
                         {events.map((event) => (
-                            <li key={event.id}>{event.title} - {event.time}</li> // Exibindo título e hora do evento
+                            <li key={event.id}>{event.title} - {event.time}</li>
                         ))}
                     </ul>
                 ) : (

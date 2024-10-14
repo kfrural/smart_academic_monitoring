@@ -1,4 +1,3 @@
-// src/services/authService.ts
 import { auth } from "./firebaseConfig";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 

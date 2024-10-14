@@ -66,8 +66,8 @@
 .cta-buttons {
   display: flex;
   justify-content: center;
-  gap: 2rem; /* Adiciona um espaço de 2rem entre os botões */
-  margin-top: 2rem; /* Adiciona um pouco de espaço acima dos botões */
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .cta-button {

@@ -18,7 +18,6 @@
   box-sizing: border-box;
 }
 
-/* Estilos para o gráfico de pizza */
 .pie-chart-container {
   width: 100%;
   height: 300px;
