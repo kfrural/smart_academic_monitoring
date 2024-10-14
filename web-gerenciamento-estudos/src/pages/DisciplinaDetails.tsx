@@ -1,138 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
-import { db } from "../services/firebaseConfig";
+import { Pie } from "react-chartjs-2";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Pie } from "react-chartjs-2";
+import useDisciplineDetails from "../hooks/useDisciplineDetails";
 import "../styles/DisciplinaDetails.css";
-
-interface Grade {
-  score: number;
-  maxScore: number;
-  examName: string;
-}
-
-interface Schedule {
-  day: string;
-  time: string;
-}
-
-interface Exam {
-  name: string;
-  type: string;
-  date: string;
-}
-
-interface Discipline {
-  id: string;
-  nome: string;
-  grades?: Grade[];
-  schedules?: Schedule[];
-  exams?: Exam[];
-}
+import { Grade } from "../models/Grade";
 
 const DisciplineDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [discipline, setDiscipline] = useState<Discipline | null>(null);
+  const {
+    discipline,
+    loading,
+    error,
+    handleAddGrade,
+    handleAddSchedule,
+    handleAddExam,
+    calculateWeightedAverage,
+    calculatePassingRate,
+  } = useDisciplineDetails(id);
+
   const [newGrade, setNewGrade] = useState<Grade>({ score: 0, maxScore: 0, examName: "" });
   const [newSchedule, setNewSchedule] = useState<{ day: string; time: string }>({ day: "", time: "" });
   const [newExam, setNewExam] = useState<{ name: string; type: string; date: string }>({ name: "", type: "Prova", date: "" });
-
-  useEffect(() => {
-    fetchDiscipline();
-  }, [id]);
-
-  const fetchDiscipline = async () => {
-    if (!id) {
-      console.error("ID da disciplina não fornecido");
-      return;
-    }
-
-    try {
-      const docRef = doc(db, "disciplinas", id);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const disciplineData: Discipline = { id: docSnap.id, ...docSnap.data() } as Discipline;
-        setDiscipline(disciplineData);
-      } else {
-        throw new Error("Documento não encontrado!");
-      }
-    } catch (error) {
-      console.error("Erro ao carregar disciplina:", error);
-    }
-  };
-
-  const handleAddGrade = async () => {
-    if (!discipline || !newGrade.examName) return;
-
-    try {
-      const docRef = doc(db, "disciplinas", discipline.id);
-      await updateDoc(docRef, {
-        grades: arrayUnion(newGrade),
-      });
-      setDiscipline((prev) => ({
-        ...prev!,
-        grades: [...(prev?.grades || []), newGrade],
-      }));
-      setNewGrade({ score: 0, maxScore: 0, examName: "" });
-    } catch (error) {
-      console.error("Erro ao adicionar nota:", error);
-    }
-  };
-
-  const handleAddSchedule = async () => {
-    if (!discipline) return;
-
-    try {
-      const docRef = doc(db, "disciplinas", discipline.id);
-      await updateDoc(docRef, {
-        schedules: arrayUnion(newSchedule),
-      });
-      setDiscipline((prev) => ({
-        ...prev!,
-        schedules: [...(prev?.schedules || []), newSchedule],
-      }));
-      setNewSchedule({ day: "", time: "" }); 
-    } catch (error) {
-      console.error("Erro ao adicionar horário:", error);
-    }
-  };
-
-  const handleAddExam = async () => {
-    if (!discipline || !newExam.name || !newExam.date) return;
-
-    try {
-      const docRef = doc(db, "disciplinas", discipline.id);
-      await updateDoc(docRef, {
-        exams: arrayUnion(newExam),
-      });
-      setDiscipline((prev) => ({
-        ...prev!,
-        exams: [...(prev?.exams || []), newExam],
-      }));
-      setNewExam({ name: "", type: "Prova", date: "" });
-    } catch (error) {
-      console.error("Erro ao adicionar prova:", error);
-    }
-  };
-
-  const calculateWeightedAverage = () => {
-    if (!discipline?.grades || discipline.grades.length === 0) return 0;
-
-    const totalWeight = discipline.grades.reduce((acc, grade) => acc + grade.maxScore, 0);
-    const weightedSum = discipline.grades.reduce((acc, grade) => acc + (grade.score / grade.maxScore) * grade.maxScore, 0);
-
-    return (weightedSum / totalWeight).toFixed(2);
-  };
-
-  const calculatePassingRate = () => {
-    if (!discipline?.grades || discipline.grades.length === 0) return 0;
-    const totalNeeded = discipline.grades.reduce((acc, grade) => acc + grade.maxScore, 0);
-    const totalObtained = discipline.grades.reduce((acc, grade) => acc + grade.score, 0);
-    return ((totalObtained / totalNeeded) * 100).toFixed(2);
-  };
 
   const totalScore = discipline?.grades?.reduce((acc, grade) => acc + grade.maxScore, 0) || 1;
   const totalObtained = discipline?.grades?.reduce((acc, grade) => acc + grade.score, 0) || 0;
@@ -160,7 +50,9 @@ const DisciplineDetails: React.FC = () => {
     <div className="discipline-details">
       <Header />
       <div className="content-wrapper">
-        {discipline ? (
+        {loading && <p>Carregando disciplina...</p>}
+        {error && <p>{error}</p>}
+        {discipline && (
           <>
             <div className="details">
               <h1>Disciplina: {discipline.nome}</h1>
@@ -192,7 +84,7 @@ const DisciplineDetails: React.FC = () => {
                   <option key={time} value={time}>{time}</option>
                 ))}
               </select>
-              <button onClick={handleAddSchedule}>Adicionar Horário</button>
+              <button onClick={() => handleAddSchedule(newSchedule)}>Adicionar Horário</button>
 
               <h2>Datas de Provas e Trabalhos</h2>
               <ul>
@@ -221,7 +113,7 @@ const DisciplineDetails: React.FC = () => {
                 value={newExam.date}
                 onChange={(e) => setNewExam({ ...newExam, date: e.target.value })}
               />
-              <button onClick={handleAddExam}>Adicionar Prova</button>
+              <button onClick={() => handleAddExam(newExam)}>Adicionar Prova</button>
 
               <h2>Notas</h2>
               <ul>
@@ -250,7 +142,7 @@ const DisciplineDetails: React.FC = () => {
                 value={newGrade.maxScore}
                 onChange={(e) => setNewGrade({ ...newGrade, maxScore: Number(e.target.value) })}
               />
-              <button onClick={handleAddGrade}>Adicionar Nota</button>
+              <button onClick={() => handleAddGrade(newGrade)}>Adicionar Nota</button>
             </div>
 
             <div className="chart-container">
@@ -263,8 +155,6 @@ const DisciplineDetails: React.FC = () => {
               </div>
             </div>
           </>
-        ) : (
-          <p>Carregando disciplina...</p>
         )}
       </div>
       <Footer />

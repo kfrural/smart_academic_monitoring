@@ -1,39 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../services/firebaseConfig";
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/Dashboard.css';
+import useFetchData from '../hooks/useFetchData';
 
 Chart.register(...registerables);
 
-interface Grade {
-  examName: string;
-  score: number;
-  maxScore: number;
-}
-
-interface EstudoData {
-  nome: string;
-  grades?: Grade[];
-}
-
 const Dashboard: React.FC = () => {
-  const [dados, setDados] = useState<EstudoData[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const estudoSnapshot = await getDocs(collection(db, "disciplinas"));
-      const estudoList = estudoSnapshot.docs.map(doc => doc.data()) as EstudoData[];
-      setDados(estudoList);
-    };
-    fetchData();
-  }, []);
+  const { dados, loading, error } = useFetchData();
 
   const labels = dados.map(item => item.nome);
-
   const notas = dados.map(item => {
     const grades = item.grades || [];
     const somaDasNotas = grades.reduce((acc, grade) => acc + grade.score, 0);
@@ -49,13 +27,15 @@ const Dashboard: React.FC = () => {
     }]
   };
 
+  if (loading) return <p>Carregando...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <>
       <Header />
       <div className="dashboard-container">
         <h1>Painel de Desempenho</h1>
         <Bar data={data} />
-
         <h2>Notas por Disciplina</h2>
         <table>
           <thead>
