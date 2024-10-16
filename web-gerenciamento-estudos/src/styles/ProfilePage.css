@@ -1,0 +1,93 @@
+.profile-page {
+  font-family: 'Arial', sans-serif;
+}
+
+.profile-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: #444;
+}
+
+.user-info, .grades-section, .courses-section, .average-grade-section {
+  margin-bottom: 20px;
+}
+
+.user-info label {
+  font-weight: bold;
+  color: #555;
+}
+
+.user-info input {
+  padding: 10px;
+  margin-top: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-top: 10px;
+  border: 3px solid #ddd;
+}
+
+.grades-section ul, .courses-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.grades-section li, .courses-section li {
+  background: #f0f0f0;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  font-size: 1.1rem;
+}
+
+.edit-button, .save-button, .logout-button {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button {
+  background-color: #dc3545;
+}
+
+.edit-button:hover, .save-button:hover, .logout-button:hover {
+  opacity: 0.9;
+}
+
+.save-button[disabled] {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.average-grade-section h3 {
+  font-size: 1.2rem;
+  color: #007BFF;
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  transition: background-color 0.3s ease;
+}

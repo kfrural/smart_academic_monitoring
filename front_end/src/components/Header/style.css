@@ -1,0 +1,35 @@
+/* style.css */
+
+/* Estilo geral do cabeçalho */
+header {
+    background-color: #4CAF50; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto */
+    padding: 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  /* Estilo do título */
+  header h1 {
+    font-size: 2rem; /* Tamanho da fonte do título */
+    margin: 0; /* Remove margem padrão */
+  }
+  
+  /* Estilo da navegação */
+  nav {
+    margin-top: 10px; /* Margem superior */
+  }
+  
+  /* Estilo dos links */
+  nav a {
+    color: white; /* Cor do texto dos links */
+    text-decoration: none; /* Remove o sublinhado */
+    margin: 0 15px; /* Margens laterais */
+    font-size: 1rem; /* Tamanho da fonte dos links */
+    transition: color 0.3s; /* Transição suave para a cor do texto */
+  }
+  
+  /* Estilo dos links ao passar o mouse */
+  nav a:hover {
+    color: #f0f8ff; /* Cor do texto ao passar o mouse */
+  }
+  

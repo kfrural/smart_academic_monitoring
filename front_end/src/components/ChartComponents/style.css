@@ -1,0 +1,15 @@
+.chart-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-container h3 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 1rem;
+  }
+  

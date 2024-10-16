@@ -1,0 +1,33 @@
+/* src/style.css */
+
+/* Estilos para a lista de tarefas */
+.task-list {
+    background-color: #f9f9f9; /* Cor de fundo da lista */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 20px; /* Espaço abaixo da lista */
+  }
+  
+  .task-list h2 {
+    margin-bottom: 15px; /* Espaçamento abaixo do título */
+  }
+  
+  .task-list ul {
+    list-style-type: none; /* Remove marcadores padrão */
+    padding: 0; /* Remove padding padrão */
+  }
+  
+  .task-list li {
+    padding: 10px; /* Espaçamento interno para cada item */
+    border-bottom: 1px solid #ddd; /* Linha separadora */
+  }
+  
+  .task-list li:last-child {
+    border-bottom: none; /* Remove a linha do último item */
+  }
+  
+  .task-list strong {
+    color: #007bff; /* Cor do texto em negrito */
+  }
+  

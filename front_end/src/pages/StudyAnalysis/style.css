@@ -1,0 +1,22 @@
+/* src/style.css */
+
+/* Estilos para a Análise de Estudo */
+.study-analysis {
+    padding: 20px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 20px auto; /* Margem centralizada */
+    max-width: 600px; /* Largura máxima */
+  }
+  
+  .study-analysis h1 {
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    text-align: center; /* Centraliza o título */
+  }
+  
+  .study-analysis p {
+    margin-bottom: 20px; /* Espaçamento abaixo do parágrafo */
+    text-align: center; /* Centraliza o parágrafo */
+  }
+  
