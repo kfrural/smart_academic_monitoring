@@ -7,13 +7,7 @@ import { db, storage } from "../services/firebaseConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ProfilePage.css";
-
-interface UserData {
-  name: string;
-  phone: string;
-  profileImage: string;
-  courses: string[];
-}
+import { UserData } from "../models/UserData";
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
