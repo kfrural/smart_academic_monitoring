@@ -1,36 +1,63 @@
-.app-wrapper {
-  display: flex;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
-}
+/* DisciplinaDetails.css */
 
 .content-wrapper {
-  width: 90%;
+  width: 80%; /* Ajustar largura para melhor uso do espaço */
   margin: 0 auto;
   padding: 20px;
-  overflow-x: hidden;
+  background-color: #fff; /* Fundo branco para melhor contraste */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-.left-side, .right-side {
-  flex: 1;
-  padding: 20px;
-  box-sizing: border-box;
+.details {
+  margin-bottom: 30px; /* Espaço entre seções */
 }
 
-.pie-chart-container {
-  width: 100%;
-  height: 300px;
-  margin-top: 20px;
+h1, h2, h3 {
+  color: #333; /* Cor do texto */
 }
 
-@media (max-width: 768px) {
-  .left-side, .right-side {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
+input, select, button {
+  border: 1px solid #ccc; /* Borda suave */
+  border-radius: 4px; /* Bordas arredondadas */
+  padding: 10px; /* Espaçamento interno */
+  margin-bottom: 15px; /* Espaçamento entre inputs */
+  width: calc(80% - 22px); /* Largura total com padding e border */
+  max-width: 200px; /* Largura máxima dos inputs */
+  font-size: 16px; /* Tamanho da fonte */
+}
 
-  .content-wrapper {
-    flex-direction: column;
-  }
+input:focus, select:focus {
+  border-color: #007bff; /* Cor da borda ao focar */
+  outline: none; /* Remove o contorno padrão */
+}
+
+button {
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  cursor: pointer; /* Muda o cursor para pointer */
+  transition: background-color 0.3s; /* Transição suave */
+}
+
+button:hover {
+  background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+.chart-container {
+  margin-top: 30px; /* Espaço acima do gráfico */
+}
+
+.statistics {
+  display: flex; /* Alinha estatísticas horizontalmente */
+  justify-content: space-between; /* Espaço entre os itens */
+  margin-bottom: 20px; /* Espaço abaixo das estatísticas */
+}
+
+.pie-chart {
+  height: 300px; /* Altura do gráfico */
+}
+
+ul {
+  list-style-type: none; /* Remove marcadores da lista */
+  padding: 0; /* Remove padding da lista */
 }

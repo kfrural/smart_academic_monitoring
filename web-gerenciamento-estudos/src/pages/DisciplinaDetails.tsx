@@ -21,6 +21,9 @@ const DisciplineDetails: React.FC = () => {
   } = useDisciplineDetails(id);
 
   const [newGrade, setNewGrade] = useState<Grade>({ score: 0, maxScore: 0, examName: "" });
+
+
+
   const [newSchedule, setNewSchedule] = useState<{ day: string; time: string }>({ day: "", time: "" });
   const [newExam, setNewExam] = useState<{ name: string; type: string; date: string }>({ name: "", type: "Prova", date: "" });
 
@@ -46,6 +49,7 @@ const DisciplineDetails: React.FC = () => {
 
   const availableTimes = ["Primeiro (7:00 - 8:40)", "Segundo (9:10 - 11:00)", "Terceiro (13:00 - 14:40)", "Quarto (15:10 - 17:00)", "Quinto (18:30 - 20:10)", "Sexto (20:40 - 22:00)"];
 
+
   return (
     <div className="discipline-details">
       <Header />
@@ -59,9 +63,9 @@ const DisciplineDetails: React.FC = () => {
 
               <h2>Horários de Aula</h2>
               <ul>
-                {discipline.schedules?.map((schedule, index) => (
+                {discipline.eventos?.map((schedule, index) => (
                   <li key={index}>
-                    {schedule.day} - {schedule.time}
+                    {schedule.day} - {schedule.month}
                   </li>
                 ))}
               </ul>
@@ -124,25 +128,42 @@ const DisciplineDetails: React.FC = () => {
                 ))}
               </ul>
               <h3>Adicionar Nota</h3>
-              <input
-                type="text"
-                placeholder="Nome da Prova"
+              <select
                 value={newGrade.examName}
                 onChange={(e) => setNewGrade({ ...newGrade, examName: e.target.value })}
-              />
+              >
+                <option value="">Selecione uma prova</option>
+                {discipline.exams?.map((exam, index) => (
+                  <option key={exam.name} value={exam.name}>
+                    {exam.name}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor="score">Nota Obtida:</label>
               <input
+                id="score"
                 type="number"
-                placeholder="Nota"
+                placeholder="Nota Obtida"
                 value={newGrade.score}
                 onChange={(e) => setNewGrade({ ...newGrade, score: Number(e.target.value) })}
               />
+
+              <label htmlFor="maxScore">Nota Máxima:</label>
               <input
+                id="maxScore"
                 type="number"
                 placeholder="Nota Máxima"
                 value={newGrade.maxScore}
                 onChange={(e) => setNewGrade({ ...newGrade, maxScore: Number(e.target.value) })}
               />
-              <button onClick={() => handleAddGrade(newGrade)}>Adicionar Nota</button>
+
+              <button
+                onClick={() => handleAddGrade(newGrade)}
+                disabled={!discipline.exams || discipline.exams.length === 0}
+              >
+                Adicionar Nota
+              </button>
             </div>
 
             <div className="chart-container">
