@@ -1,63 +1,130 @@
-/* DisciplinaDetails.css */
-
 .content-wrapper {
-  width: 80%; /* Ajustar largura para melhor uso do espaço */
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff; /* Fundo branco para melhor contraste */
-  border-radius: 8px; /* Cantos arredondados */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .details {
-  margin-bottom: 30px; /* Espaço entre seções */
+  margin-bottom: 40px;
 }
 
-h1, h2, h3 {
-  color: #333; /* Cor do texto */
+h1 {
+  font-size: 2.5rem;
+  color: #0056b3;
+  margin-bottom: 10px;
 }
 
-input, select, button {
-  border: 1px solid #ccc; /* Borda suave */
-  border-radius: 4px; /* Bordas arredondadas */
-  padding: 10px; /* Espaçamento interno */
-  margin-bottom: 15px; /* Espaçamento entre inputs */
-  width: calc(80% - 22px); /* Largura total com padding e border */
-  max-width: 200px; /* Largura máxima dos inputs */
-  font-size: 16px; /* Tamanho da fonte */
+h2 {
+  font-size: 1.8rem;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.4rem;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
 input:focus, select:focus {
-  border-color: #007bff; /* Cor da borda ao focar */
-  outline: none; /* Remove o contorno padrão */
+  border-color: #0056b3;
+  background-color: #ffffff;
+  outline: none;
 }
 
 button {
-  background-color: #007bff; /* Cor de fundo do botão */
-  color: white; /* Cor do texto do botão */
-  cursor: pointer; /* Muda o cursor para pointer */
-  transition: background-color 0.3s; /* Transição suave */
+  display: inline-block;
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-  background-color: #0056b3; /* Cor do botão ao passar o mouse */
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
+button:active {
+  background-color: #0056b3;
+  transform: translateY(0);
+}
+
+
 .chart-container {
-  margin-top: 30px; /* Espaço acima do gráfico */
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .statistics {
-  display: flex; /* Alinha estatísticas horizontalmente */
-  justify-content: space-between; /* Espaço entre os itens */
-  margin-bottom: 20px; /* Espaço abaixo das estatísticas */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.statistics h2 {
+  font-size: 1.6rem;
+  color: #0056b3;
 }
 
 .pie-chart {
-  height: 300px; /* Altura do gráfico */
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-ul {
-  list-style-type: none; /* Remove marcadores da lista */
-  padding: 0; /* Remove padding da lista */
+@media (max-width: 768px) {
+  .content-wrapper {
+    width: 95%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  input, select {
+    max-width: 100%;
+  }
+
+  .statistics {
+    flex-direction: column;
+    align-items: center;
+  }
 }
