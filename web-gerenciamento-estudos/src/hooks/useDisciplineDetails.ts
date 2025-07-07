@@ -60,7 +60,7 @@ const useDisciplineDetails = (id: string | undefined) => {
       });
       setDiscipline((prev) => ({
         ...prev!,
-        schedules: [...(prev?.schedules || []), newSchedule],
+        schedules: [...(prev?.eventos || []), newSchedule],
       }));
     } catch (error) {
       console.error("Erro ao adicionar horário:", error);

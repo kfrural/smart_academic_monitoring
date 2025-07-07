@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Pie } from "react-chartjs-2";
 import Header from "../components/Header";
@@ -27,6 +27,8 @@ const DisciplineDetails: React.FC = () => {
   const totalScore = discipline?.grades?.reduce((acc, grade) => acc + grade.maxScore, 0) || 1;
   const totalObtained = discipline?.grades?.reduce((acc, grade) => acc + grade.score, 0) || 0;
 
+  const pointsToPass = Math.max(0, 6 - totalObtained);
+
   const pieData = {
     labels: ["Nota Obtida", "Nota Faltante"],
     datasets: [
@@ -44,7 +46,14 @@ const DisciplineDetails: React.FC = () => {
     maintainAspectRatio: false,
   };
 
-  const availableTimes = ["Primeiro (7:00 - 8:40)", "Segundo (9:10 - 11:00)", "Terceiro (13:00 - 14:40)", "Quarto (15:10 - 17:00)", "Quinto (18:30 - 20:10)", "Sexto (20:40 - 22:00)"];
+  const availableTimes = [
+    "Primeiro (7:00 - 8:40)",
+    "Segundo (9:10 - 11:00)",
+    "Terceiro (13:00 - 14:40)",
+    "Quarto (15:10 - 17:00)",
+    "Quinto (18:30 - 20:10)",
+    "Sexto (20:40 - 22:00)",
+  ];
 
   return (
     <div className="discipline-details">
@@ -59,9 +68,9 @@ const DisciplineDetails: React.FC = () => {
 
               <h2>Horários de Aula</h2>
               <ul>
-                {discipline.schedules?.map((schedule, index) => (
-                  <li key={index}>
-                    {schedule.day} - {schedule.time}
+                {discipline.eventos?.map((schedule, index) => (
+                  <li key={index} className="schedule-item">
+                    📅 {schedule.day} - {schedule.month}
                   </li>
                 ))}
               </ul>
@@ -87,10 +96,10 @@ const DisciplineDetails: React.FC = () => {
               <button onClick={() => handleAddSchedule(newSchedule)}>Adicionar Horário</button>
 
               <h2>Datas de Provas e Trabalhos</h2>
-              <ul>
+              <ul className="exam-list">
                 {discipline.exams?.map((exam, index) => (
-                  <li key={index}>
-                    {exam.name} ({exam.type}) - {exam.date}
+                  <li key={index} className="exam-item">
+                    <strong>{exam.name}</strong> ({exam.type}) - {exam.date}
                   </li>
                 ))}
               </ul>
@@ -116,39 +125,62 @@ const DisciplineDetails: React.FC = () => {
               <button onClick={() => handleAddExam(newExam)}>Adicionar Prova</button>
 
               <h2>Notas</h2>
-              <ul>
+              <ul className="grade-list">
                 {discipline.grades?.map((grade, index) => (
-                  <li key={index}>
-                    {grade.examName}: {grade.score}/{grade.maxScore}
+                  <li key={index} className="grade-item">
+                    📝 <strong>{grade.examName}</strong>: {grade.score}/{grade.maxScore}
                   </li>
                 ))}
               </ul>
               <h3>Adicionar Nota</h3>
-              <input
-                type="text"
-                placeholder="Nome da Prova"
+              <select
                 value={newGrade.examName}
                 onChange={(e) => setNewGrade({ ...newGrade, examName: e.target.value })}
-              />
+              >
+                <option value="">Selecione uma prova</option>
+                {discipline.exams?.map((exam, index) => (
+                  <option key={exam.name} value={exam.name}>
+                    {exam.name}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor="score">Nota Obtida:</label>
               <input
+                id="score"
                 type="number"
-                placeholder="Nota"
+                placeholder="Nota Obtida"
                 value={newGrade.score}
                 onChange={(e) => setNewGrade({ ...newGrade, score: Number(e.target.value) })}
               />
+
+              <label htmlFor="maxScore">Nota Máxima:</label>
               <input
+                id="maxScore"
                 type="number"
                 placeholder="Nota Máxima"
                 value={newGrade.maxScore}
                 onChange={(e) => setNewGrade({ ...newGrade, maxScore: Number(e.target.value) })}
               />
-              <button onClick={() => handleAddGrade(newGrade)}>Adicionar Nota</button>
+
+              <button
+                onClick={() => handleAddGrade(newGrade)}
+                disabled={!discipline.exams || discipline.exams.length === 0}
+              >
+                Adicionar Nota
+              </button>
             </div>
 
+            {/* Estatísticas */}
             <div className="chart-container">
               <div className="statistics">
                 <h2>Média Ponderada: {calculateWeightedAverage()}%</h2>
                 <h2>Taxa de Aprovação: {calculatePassingRate()}%</h2>
+                <h2>
+                  {pointsToPass > 0
+                    ? `Faltam ${pointsToPass.toFixed(2)} pontos para ser aprovado.`
+                    : "Parabéns! Você atingiu a nota necessária para aprovação."}
+                </h2>
               </div>
               <div className="pie-chart">
                 <Pie data={pieData} options={options} />
